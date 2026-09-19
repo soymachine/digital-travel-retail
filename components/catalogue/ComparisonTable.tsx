@@ -11,10 +11,9 @@ import type { CatalogueProduct } from "@/types/catalogue";
 const rows: { label: string; value: (product: CatalogueProduct) => string }[] = [
   { label: "Type", value: (product) => product.concentration },
   { label: "Family", value: (product) => product.fragranceFamily.join(" / ") },
-  { label: "Top notes", value: (product) => product.notes.top.join(", ") },
-  { label: "Heart", value: (product) => product.notes.heart.join(", ") },
-  { label: "Base", value: (product) => product.notes.base.join(", ") },
-  { label: "Positioning", value: (product) => product.genderPositioning ?? "—" },
+  { label: "Signature", value: (product) => product.descriptor },
+  { label: "Notes", value: (product) => product.keyNotes.join(", ") },
+  { label: "Perfumers", value: (product) => product.perfumers.join(", ") },
   { label: "Lead argument", value: (product) => product.sellingArguments[0] },
 ];
 

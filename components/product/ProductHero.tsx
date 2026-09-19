@@ -45,9 +45,7 @@ export function ProductHero({ product }: { product: CatalogueProduct }) {
             tone="ivory"
             fields={[
               { label: "Family", value: product.fragranceFamily.join(" / ") },
-              ...(product.genderPositioning
-                ? [{ label: "Positioning", value: product.genderPositioning }]
-                : []),
+              { label: "Signature", value: product.descriptor },
               { label: "Type", value: product.concentration },
             ]}
           />

@@ -14,10 +14,6 @@ export function ProductCard({ product }: { product: CatalogueProduct }) {
   const { stickersFor, ready } = usePassport();
   const applied = ready ? stickersFor(product.id) : [];
 
-  const keyNotes = [product.notes.top[0], product.notes.heart[0], product.notes.base[0]].filter(
-    Boolean,
-  );
-
   return (
     <article className="group flex h-full flex-col border border-ivory-line bg-ivory text-ink transition-transform duration-200 hover:-translate-y-1 hover:shadow-xl on-ivory">
       <div className="relative flex items-center justify-center overflow-hidden bg-ivory-deep/60 doc-pattern px-6 py-8">
@@ -57,9 +53,12 @@ export function ProductCard({ product }: { product: CatalogueProduct }) {
           <p className="signage-sm mt-1 text-ink/55">{product.concentration}</p>
         </div>
 
-        <p className="signage text-gold-deep">{product.fragranceFamily.join(" • ")}</p>
+        <div>
+          <p className="signage text-gold-deep">{product.fragranceFamily.join(" • ")}</p>
+          <p className="signage-sm mt-2 text-ink/50">{product.descriptor}</p>
+        </div>
 
-        <p className="text-sm leading-relaxed text-ink/70">{keyNotes.join(" · ")}</p>
+        <p className="text-sm leading-relaxed text-ink/70">{product.keyNotes.join(" · ")}</p>
 
         {applied.length > 0 && (
           <div className="flex flex-wrap gap-2">

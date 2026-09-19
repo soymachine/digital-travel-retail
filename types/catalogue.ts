@@ -6,13 +6,6 @@
  * UI layer stays untouched.
  */
 
-export type NoteLevel = "top" | "heart" | "base";
-
-export type FragranceNote = {
-  name: string;
-  level: NoteLevel;
-};
-
 export type Brand = {
   id: string;
   slug: string;
@@ -45,23 +38,28 @@ export type Product = {
   concentration: string;
 
   fragranceFamily: string[];
-  genderPositioning?: string;
+
+  /** Two-word olfactive signature, e.g. "Solar & sensual". */
+  descriptor: string;
 
   shortDescription: string;
 
   /** Longer-form product story shown lower on the product page. */
   story: string;
 
-  notes: {
-    top: string[];
-    heart: string[];
-    base: string[];
-  };
+  /**
+   * The notes communicated for this fragrance. The brand supplies these as a
+   * flat list, not as a top/heart/base pyramid, so the model keeps them flat
+   * rather than assigning levels that were never given.
+   */
+  keyNotes: string[];
 
   sellingArguments: string[];
 
   /** When to reach for this fragrance during a sales conversation. */
   recommendFor: string[];
+
+  perfumers: string[];
 
   productImage: string;
   productCode: string;

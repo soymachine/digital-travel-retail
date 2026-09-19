@@ -30,10 +30,11 @@ and silently ignores the `@/*` path aliases if it is installed.
 1. **Home** — the concept in one screen → *Explore Rabanne*.
 2. **`/brand/rabanne`** — passport identity page → *Million*.
 3. **`/line/million`** — the collection: search, filters, sort, 3 product cards.
-4. Search `sandalwood` → Million Gold + Million Gold Parfum. Search `red` →
-   Million Red.
+4. Search `ylang` → Million Gold Parfum + Million Red. Search `red` →
+   Million Red. Search works on names, families, notes, descriptors,
+   perfumers and selling copy.
 5. **`/product/million-gold`** — bottle, family, notes, story, selling
-   arguments, when to recommend it.
+   arguments, when to recommend it, perfumer credits.
 6. *Add sticker → Top Seller*. Go back to the collection: the stamp is on the
    card, and it is also a filter.
 7. **`/compare`** — up to three fragrances side by side.
@@ -76,12 +77,17 @@ Content is deliberately separated from the UI:
 
 ## Content status
 
-The product copy in this repository is a **realistic seed dataset for a
-technical demo**, not approved brand copy. Naming, concentration, fragrance
-family terminology, notes, descriptions and selling arguments must be validated
-against Puig / Rabanne approved assets before any client-facing use. The dataset
-intentionally contains no pricing, longevity, sustainability, award or campaign
-claims.
+Product names, concentrations, olfactive families, notes, descriptors and
+perfumer credits are brand-supplied. The surrounding sales copy — short
+descriptions, product stories, selling arguments and the "recommend it when"
+cues — was written for the demo from those facts and still needs validation
+before any client-facing use. The dataset intentionally contains no pricing,
+longevity, sustainability, award or campaign claims.
+
+Notes are held as a flat list rather than a top/heart/base pyramid, because the
+brand communicates three notes per fragrance without levels. If approved
+pyramid data arrives later, `keyNotes` in `types/catalogue.ts` is the single
+place to change.
 
 ## Not in this phase
 

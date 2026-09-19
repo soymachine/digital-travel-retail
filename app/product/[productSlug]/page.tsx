@@ -70,7 +70,7 @@ export default async function ProductPage({ params }: Params) {
                 Key notes
               </SectionLabel>
               <div className="mt-6">
-                <ProductNotes notes={product.notes} />
+                <ProductNotes notes={product.keyNotes} />
               </div>
             </section>
 
@@ -102,8 +102,21 @@ export default async function ProductPage({ params }: Params) {
             </section>
 
             {/* Sits above the related-products section so the picker panel is never covered. */}
-            <section className="relative z-30">
+            <section>
               <SectionLabel index="06" tone="ivory">
+                Perfumers
+              </SectionLabel>
+              <ul className="mt-6 flex flex-wrap gap-x-8 gap-y-3">
+                {product.perfumers.map((perfumer) => (
+                  <li key={perfumer} className="font-display text-lg text-ink/80">
+                    {perfumer}
+                  </li>
+                ))}
+              </ul>
+            </section>
+
+            <section className="relative z-30">
+              <SectionLabel index="07" tone="ivory">
                 My stickers
               </SectionLabel>
               <div className="mt-6">
@@ -115,7 +128,7 @@ export default async function ProductPage({ params }: Params) {
 
         {related.length > 0 && (
           <section className="mt-12">
-            <SectionLabel index="07" tone="ink">
+            <SectionLabel index="08" tone="ink">
               You may also like
             </SectionLabel>
             <div className="mt-6">
