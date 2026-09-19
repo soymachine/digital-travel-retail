@@ -1,0 +1,66 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    @apply bg-ink text-ivory font-sans;
+  }
+
+  /* Visible focus everywhere, on both the navy and ivory surfaces. */
+  :focus-visible {
+    @apply outline-none ring-2 ring-gold ring-offset-2 ring-offset-ink;
+  }
+
+  .on-ivory :focus-visible {
+    @apply ring-offset-ivory;
+  }
+}
+
+@layer components {
+  /* Airport signage microcopy: small, uppercase, widely tracked. */
+  .signage {
+    @apply font-mono text-[10px] uppercase tracking-signage;
+  }
+
+  .signage-sm {
+    @apply font-mono text-[9px] uppercase tracking-signage;
+  }
+
+  /* Subtle guilloche-style document texture used on passport panels. */
+  .doc-pattern {
+    background-image:
+      repeating-linear-gradient(45deg, rgba(16, 20, 28, 0.045) 0 1px, transparent 1px 7px),
+      repeating-linear-gradient(-45deg, rgba(16, 20, 28, 0.035) 0 1px, transparent 1px 11px);
+  }
+
+  .doc-pattern-dark {
+    background-image:
+      repeating-linear-gradient(45deg, rgba(246, 244, 239, 0.05) 0 1px, transparent 1px 7px),
+      repeating-linear-gradient(-45deg, rgba(246, 244, 239, 0.035) 0 1px, transparent 1px 11px);
+  }
+
+  /* Perforated edge of a boarding pass. */
+  .perforated {
+    background-image: radial-gradient(circle, rgba(16, 20, 28, 0.25) 1px, transparent 1.4px);
+    background-size: 8px 8px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
