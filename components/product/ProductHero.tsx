@@ -11,16 +11,17 @@ import type { CatalogueProduct } from "@/types/catalogue";
 export function ProductHero({ product }: { product: CatalogueProduct }) {
   return (
     <div className="grid gap-8 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-12">
-      <div className="relative flex items-center justify-center border border-ivory-line bg-ivory-deep/50 doc-pattern px-6 py-10">
-        <Image
-          src={product.productImage}
-          alt={`${product.brand.name} ${product.name} bottle`}
-          width={320}
-          height={420}
-          priority
-          unoptimized
-          className="h-72 w-auto sm:h-80"
-        />
+      <div className="relative border border-ivory-line bg-ivory-deep/50 doc-pattern px-6 py-10">
+        <div className="relative mx-auto h-80 w-full sm:h-96">
+          <Image
+            src={product.productImage}
+            alt={`${product.brand.name} ${product.name} bottle`}
+            fill
+            sizes="(max-width: 1024px) 90vw, 40vw"
+            priority
+            className="object-contain"
+          />
+        </div>
         <span className="signage-sm absolute bottom-4 left-4 text-ink/35">{product.productCode}</span>
         {product.isNew && (
           <span className="signage-sm absolute right-4 top-4 border border-gold-deep/60 px-2 py-1 text-gold-deep">

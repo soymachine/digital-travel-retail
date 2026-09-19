@@ -37,14 +37,15 @@ export function ComparisonTable({ products }: { products: CatalogueProduct[] }) 
             </th>
             {products.map((product) => (
               <th key={product.id} scope="col" className="border-b border-ink/15 px-4 py-4 align-bottom">
-                <Image
-                  src={product.productImage}
-                  alt={`${product.name} bottle`}
-                  width={80}
-                  height={110}
-                  unoptimized
-                  className="h-24 w-auto"
-                />
+                <div className="relative h-24 w-20">
+                  <Image
+                    src={product.productImage}
+                    alt={`${product.name} bottle`}
+                    fill
+                    sizes="80px"
+                    className="object-contain object-left"
+                  />
+                </div>
                 <Link
                   href={`/product/${product.slug}`}
                   className="mt-3 block font-display text-xl leading-tight text-ink hover:text-gold-deep"

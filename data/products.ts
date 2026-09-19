@@ -44,7 +44,7 @@ export const products: Product[] = [
 
     perfumers: ["Aliénor Massenet", "Suzy Le Helley", "Nathalie Benareau", "Loc Dong"],
 
-    productImage: "/products/million-gold.svg",
+    productImage: "/products/million-gold.png",
     productCode: "RBN / MLN / 001",
 
     stickers: [],
@@ -86,7 +86,7 @@ export const products: Product[] = [
 
     perfumers: ["Loc Dong", "Aliénor Massenet", "Nathalie Benareau", "Suzy Le Helley"],
 
-    productImage: "/products/million-gold-parfum.svg",
+    productImage: "/products/million-gold-parfum.png",
     productCode: "RBN / MLN / 002",
 
     stickers: [],
@@ -127,7 +127,7 @@ export const products: Product[] = [
 
     perfumers: ["Loc Dong", "Aliénor Massenet", "Nathalie Benareau", "Suzy Le Helley"],
 
-    productImage: "/products/million-red.svg",
+    productImage: "/products/million-red.png",
     productCode: "RBN / MLN / 003",
 
     stickers: [],

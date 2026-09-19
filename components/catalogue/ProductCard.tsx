@@ -16,19 +16,21 @@ export function ProductCard({ product }: { product: CatalogueProduct }) {
 
   return (
     <article className="group flex h-full flex-col border border-ivory-line bg-ivory text-ink transition-transform duration-200 hover:-translate-y-1 hover:shadow-xl on-ivory">
-      <div className="relative flex items-center justify-center overflow-hidden bg-ivory-deep/60 doc-pattern px-6 py-8">
-        <Image
-          // Local SVG packshot placeholders — swap the file for the Puig asset.
-          src={product.productImage}
-          alt={`${product.brand.name} ${product.name} bottle`}
-          width={200}
-          height={260}
-          unoptimized
-          // The catalogue is three products: load every packshot up front so a
-          // card is never blank as the advisor scrolls.
-          loading="eager"
-          className="h-44 w-auto transition-transform duration-200 group-hover:scale-[1.03]"
-        />
+      <div className="relative overflow-hidden bg-ivory-deep/60 doc-pattern px-6 py-8">
+        {/* A fixed box with object-contain: packshots of different proportions
+            all sit at the same visual scale and none of them distort. */}
+        <div className="relative mx-auto h-52 w-full">
+          <Image
+            src={product.productImage}
+            alt={`${product.brand.name} ${product.name} bottle`}
+            fill
+            sizes="(max-width: 640px) 90vw, (max-width: 1024px) 45vw, 30vw"
+            // The catalogue is three products: load every packshot up front so a
+            // card is never blank as the advisor scrolls.
+            loading="eager"
+            className="object-contain transition-transform duration-200 group-hover:scale-[1.03]"
+          />
+        </div>
 
         {product.isNew && (
           <span className="signage-sm absolute right-3 top-3 border border-gold-deep/60 px-2 py-1 text-gold-deep">

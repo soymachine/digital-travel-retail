@@ -1,14 +1,16 @@
 # Product imagery
 
-These SVG files are **temporary placeholders** generated for the demo. They are
-local assets by design: the demo never depends on remote image URLs.
+Brand packshots, stored locally: the demo never depends on remote image URLs.
 
-To use approved artwork, replace each file and point `productImage` in
-`/data/products.ts` at the new asset (transparent PNG/WebP, product centred,
-consistent crop and scale across the three bottles):
+    /public/products/million-gold.png        → Million Gold
+    /public/products/million-gold-parfum.png → Million Gold Parfum
+    /public/products/million-red.png         → Million Red
 
-    /public/products/million-gold.svg        → Million Gold packshot
-    /public/products/million-gold-parfum.svg → Million Gold Parfum packshot
-    /public/products/million-red.svg         → Million Red packshot
+To replace one, drop the new file in and point `productImage` in
+`/data/products.ts` at it. No component references an image file directly, only
+the data layer does.
 
-No component references image files directly; only the data layer does.
+The files do not need to share proportions: every packshot renders inside a
+fixed box with `object-contain`, so images of different sizes sit at the same
+visual scale and none of them distort. Transparent PNG or WebP works best
+against the ivory panels.
