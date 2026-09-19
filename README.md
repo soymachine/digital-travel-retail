@@ -42,6 +42,36 @@ and silently ignores the `@/*` path aliases if it is installed.
 
 Keyboard: `/` focuses search, `Escape` clears it.
 
+## Deploying to GitHub Pages
+
+The demo is a fully static site, so `npm run build` emits plain HTML into
+`/out` and GitHub Pages serves it. `.github/workflows/deploy.yml` builds and
+publishes on every push to the default branch, and can also be run by hand from
+the Actions tab.
+
+One-time setup, in the repository on GitHub:
+
+1. **Settings → Pages → Build and deployment → Source: GitHub Actions.**
+2. Push, or run the "Deploy to GitHub Pages" workflow manually.
+
+The site then lives at `https://<user>.github.io/digital-travel-retail/`.
+
+Two things this requires of the code, both already handled:
+
+- Project sites are served from a sub-path, so the workflow passes
+  `NEXT_PUBLIC_BASE_PATH` and `next.config.mjs` applies it as `basePath`.
+- Static hosting has no image optimiser, so images are unoptimised — and
+  `next/image` does not prefix the base path in that mode. `lib/assets.ts`
+  resolves `/public` paths, and `lib/catalogue.ts` applies it to every packshot,
+  so a new image added to the data layer is handled automatically.
+
+To preview a base-path build locally:
+
+```bash
+NEXT_PUBLIC_BASE_PATH=/digital-travel-retail npm run build
+npx serve out   # then browse the site under that sub-path
+```
+
 ## Architecture
 
 ```

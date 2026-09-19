@@ -1,3 +1,4 @@
+import { assetPath } from "@/lib/assets";
 import { brands } from "@/data/brands";
 import { productLines } from "@/data/productLines";
 import { products } from "@/data/products";
@@ -38,7 +39,9 @@ function hydrate(product: Product): CatalogueProduct {
     throw new Error(`Catalogue data is inconsistent for product "${product.id}".`);
   }
 
-  return { ...product, brand, line };
+  // The data layer stores plain /public paths; deployments under a base path
+  // need them resolved before they reach the UI.
+  return { ...product, brand, line, productImage: assetPath(product.productImage) };
 }
 
 export function getProducts(filter?: { brandId?: string; lineId?: string }): CatalogueProduct[] {

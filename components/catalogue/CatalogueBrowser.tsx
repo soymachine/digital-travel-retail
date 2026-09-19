@@ -90,13 +90,7 @@ export function CatalogueBrowser({
         )}
       </div>
 
-      {!ready ? (
-        <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3" aria-hidden>
-          {products.map((product) => (
-            <li key={product.id} className="h-[28rem] animate-pulse border border-ivory-line bg-ivory-deep/50" />
-          ))}
-        </ul>
-      ) : visible.length > 0 ? (
+      {visible.length > 0 ? (
         <ProductGrid products={visible} />
       ) : (
         <div className="animate-fade-in border border-dashed border-ink/25 px-6 py-16 text-center">
