@@ -42,7 +42,7 @@ export default function SalesPage() {
 
       <div className="mt-10 flex flex-wrap gap-3">
         <Link
-          href="/brand/rabanne"
+          href="/brands"
           className="rounded-full bg-bark px-7 py-3.5 text-sm font-medium text-paper transition-colors duration-200 hover:bg-ink"
         >
           Back to the catalogue

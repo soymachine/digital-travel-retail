@@ -3,8 +3,13 @@
 A working demo of the **Core Product Catalogue** for a travel retail fragrance
 sales force, built as a digital *sales passport* rather than a catalogue website.
 
-Demo scope: **Rabanne → Million → 3 fragrances** (Million Gold, Million Gold
-Parfum, Million Red).
+Demo scope: three houses, three collections, thirteen fragrances.
+
+| House | Collection | Fragrances |
+| --- | --- | --- |
+| Rabanne | Million | Million Gold, Million Gold Parfum, Million Red |
+| Carolina Herrera | Bad Boy | Bad Boy, Elixir, Cobalt, Cobalt Elixir, Extreme, Cobalt Absolu |
+| Jean Paul Gaultier | Le Beau | Le Beau, Paradise Garden, Narcisse, Le Parfum |
 
 There is no CMS, no backend, no database and no authentication in this phase.
 Content lives in local TypeScript objects; the advisor's personal state lives in
@@ -127,6 +132,27 @@ Content is deliberately separated from the UI:
 - **Imagery**: drop approved packshots into `/public/products` and update
   `productImage` in `data/products.ts`. See `public/products/README.md`.
 - **Copy**: everything editorial is in `data/products.ts`.
+
+## Where the content comes from
+
+Bad Boy and Le Beau were transcribed from the brand universe sheets, and their
+packshots cut out of those same sheets: names, concentrations, launch years,
+olfactive family **as written** (capitalisation carries the emphasis, so
+"AMBERY Aromatic" and "aromatic WOODY" are both preserved exactly), positioning,
+descriptor, notes, the notes each sheet singles out, and each sheet's own
+lightness → intensity order.
+
+Nothing was invented to fill the gaps: those two collections carry no story, no
+selling arguments and no perfumer credits, because their sheets do not, and the
+product page simply omits those sections.
+
+Two things to know about the extracted packshots:
+
+- They were cut from sheets stamped "internal / training purposes only", and the
+  diagonal watermark was cleaned off the bottles. They are fine for an internal
+  demo; approved packshots should replace them before anything public.
+- The brand name on the Bad Boy sheet is not printed — only the Bad Boy logo —
+  so **Carolina Herrera is an attribution, not a transcription**.
 
 ## Content status
 

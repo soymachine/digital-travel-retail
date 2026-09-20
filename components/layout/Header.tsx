@@ -38,9 +38,11 @@ export function Header() {
           {isHome ? "Travel Retail" : "Passport"}
         </Link>
 
+        {/* Search lives inside a collection, so the icon goes to the field when
+            there is one and to the brand list otherwise. */}
         <Link
-          href="/line/million#search"
-          aria-label="Search products"
+          href={pathname.startsWith("/line/") ? "#search" : "/brands"}
+          aria-label={pathname.startsWith("/line/") ? "Go to search" : "Browse brands to search"}
           className="-mr-2 flex h-9 w-9 items-center justify-center text-ink"
         >
           <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden>

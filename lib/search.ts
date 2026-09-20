@@ -42,14 +42,16 @@ function searchCorpus(product: CatalogueProduct): string {
     product.line.name,
     product.concentration,
     product.descriptor,
-    product.shortDescription,
-    product.story,
+    product.positioning ?? "",
+    product.shortDescription ?? "",
+    product.story ?? "",
     product.productCode,
+    product.familyLabel,
     ...product.fragranceFamily,
     ...product.keyNotes,
-    ...product.perfumers,
-    ...product.sellingArguments,
-    ...product.recommendFor,
+    ...(product.perfumers ?? []),
+    ...(product.sellingArguments ?? []),
+    ...(product.recommendFor ?? []),
   ]
     .join(" ")
     .toLowerCase();

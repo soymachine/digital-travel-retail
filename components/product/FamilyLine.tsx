@@ -1,23 +1,23 @@
 /**
- * The olfactive family as the brand writes it: leading words quiet and
- * lowercase, the family itself loud and uppercase — "woody AROMATIC".
+ * The olfactive family exactly as the brand writes it, e.g. "AMBERY Aromatic"
+ * or "woody FLORAL". Brands emphasise different halves, and they do it through
+ * capitalisation — so the case in the data drives the styling rather than a
+ * rule about word order.
  */
-export function FamilyLine({
-  families,
-  className = "",
-}: {
-  families: string[];
-  className?: string;
-}) {
-  const lead = families.slice(0, -1);
-  const main = families.at(-1) ?? "";
+export function FamilyLine({ label, className = "" }: { label: string; className?: string }) {
+  const words = label.split(" ").filter(Boolean);
 
   return (
     <p className={["family-line", className].join(" ")}>
-      {lead.map((family) => (
-        <span key={family}>{family.toLowerCase()} </span>
-      ))}
-      <strong>{main}</strong>
+      {words.map((word, index) => {
+        const emphasised = word === word.toUpperCase();
+        return (
+          <span key={`${word}-${index}`}>
+            {emphasised ? <strong>{word}</strong> : word.toLowerCase()}
+            {index < words.length - 1 ? " " : ""}
+          </span>
+        );
+      })}
     </p>
   );
 }

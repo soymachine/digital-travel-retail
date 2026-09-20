@@ -44,10 +44,10 @@ export function MyPicksView({ products }: { products: CatalogueProduct[] }) {
             Stamp a fragrance or mark it as a favourite and it will appear here.
           </p>
           <Link
-            href="/line/million"
+            href="/brands"
             className="mt-8 inline-block rounded-full bg-bark px-7 py-3.5 text-sm font-medium text-paper transition-colors duration-200 hover:bg-ink"
           >
-            Go to the collection
+            Browse the brands
           </Link>
         </div>
       ) : (

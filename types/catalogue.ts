@@ -11,8 +11,9 @@ export type Brand = {
   slug: string;
   name: string;
   tagline: string[];
-  origin: string;
-  category: string;
+  /** Only where the brand material states it. */
+  origin?: string;
+  category?: string;
   code: string;
   lineIds: string[];
 };
@@ -37,24 +38,38 @@ export type Product = {
   subtitle?: string;
   concentration: string;
 
+  /** Normalised family names, used by the filters. */
   fragranceFamily: string[];
+
+  /**
+   * The family as the brand writes it, e.g. "AMBERY Aromatic" or
+   * "woody FLORAL". Capitalisation carries the emphasis, so it is preserved
+   * exactly and the UI styles each word from its case.
+   */
+  familyLabel: string;
 
   /** Two-word olfactive signature, e.g. "Solar & sensual". */
   descriptor: string;
 
+  /** Who the brand positions it for, e.g. "For seductive man". */
+  positioning?: string;
+
+  /** Launch year, where the brand material states it. */
+  year?: number;
+
   /**
    * Position on the fresh → intense axis of the comparison view, 0-100.
    *
-   * DEMO ESTIMATE, pending validation: the brand has not supplied an intensity
-   * scale, so these are placed by concentration and olfactive profile. Replace
-   * with approved values before client-facing use.
+   * Where the brand publishes a lightness → intensity axis, this is that
+   * printed order. Where it does not (the Million collection), the value is a
+   * demo estimate pending validation.
    */
   intensity: number;
 
-  shortDescription: string;
+  shortDescription?: string;
 
   /** Longer-form product story shown lower on the product page. */
-  story: string;
+  story?: string;
 
   /**
    * The notes communicated for this fragrance. The brand supplies these as a
@@ -63,12 +78,15 @@ export type Product = {
    */
   keyNotes: string[];
 
-  sellingArguments: string[];
+  /** The notes the brand singles out — underlined or capitalised on its sheets. */
+  signatureNotes?: string[];
+
+  sellingArguments?: string[];
 
   /** When to reach for this fragrance during a sales conversation. */
-  recommendFor: string[];
+  recommendFor?: string[];
 
-  perfumers: string[];
+  perfumers?: string[];
 
   productImage: string;
   productCode: string;

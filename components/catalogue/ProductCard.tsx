@@ -29,12 +29,15 @@ export function ProductCard({ product }: { product: CatalogueProduct }) {
             {product.name}
           </Link>
         </h3>
-        <p className="mt-1 text-sm text-taupe-deep">{product.concentration.toLowerCase()}</p>
+        <p className="mt-1 text-sm text-taupe-deep">
+          {product.concentration.toLowerCase()}
+          {product.year ? ` · ${product.year}` : ""}
+        </p>
       </div>
 
-      <FamilyLine families={product.fragranceFamily} className="mt-5 text-center" />
+      <FamilyLine label={product.familyLabel} className="mt-5 text-center" />
 
-      <NoteRow notes={product.keyNotes} className="mt-4" />
+      <NoteRow notes={product.keyNotes} signatureNotes={product.signatureNotes} className="mt-4" />
 
       <p className="mt-4 text-center text-lg font-bold lowercase text-ink">{product.descriptor}</p>
 

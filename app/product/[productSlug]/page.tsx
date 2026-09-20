@@ -54,30 +54,39 @@ export default async function ProductPage({ params }: Params) {
           </span>
         </h1>
       </header>
-      <p className="mt-2 text-lg text-taupe-deep">{product.concentration.toLowerCase()}</p>
+      <p className="mt-2 text-lg text-taupe-deep">
+        {product.concentration.toLowerCase()}
+        {product.year ? ` · ${product.year}` : ""}
+      </p>
 
       <div className="mt-10">
         <ProductHero product={product} />
       </div>
 
-      <section className="mt-16 border-t border-line pt-10">
-        <h2 className="eyebrow">The story</h2>
-        <p className="mt-4 max-w-3xl text-lg leading-relaxed text-taupe-deep">{product.story}</p>
-      </section>
+      {product.story && (
+        <section className="mt-16 border-t border-line pt-10">
+          <h2 className="eyebrow">The story</h2>
+          <p className="mt-4 max-w-3xl text-lg leading-relaxed text-taupe-deep">{product.story}</p>
+        </section>
+      )}
 
-      <section className="mt-12 border-t border-line pt-10">
-        <h2 className="eyebrow">Selling arguments</h2>
-        <div className="mt-6">
-          <SellingArguments arguments={product.sellingArguments} />
-        </div>
-      </section>
+      {product.sellingArguments && product.sellingArguments.length > 0 && (
+        <section className="mt-12 border-t border-line pt-10">
+          <h2 className="eyebrow">Selling arguments</h2>
+          <div className="mt-6">
+            <SellingArguments arguments={product.sellingArguments} />
+          </div>
+        </section>
+      )}
 
-      <section className="mt-12 border-t border-line pt-10">
-        <h2 className="eyebrow">Recommend it when</h2>
-        <div className="mt-6 max-w-2xl">
-          <RecommendFor items={product.recommendFor} />
-        </div>
-      </section>
+      {product.recommendFor && product.recommendFor.length > 0 && (
+        <section className="mt-12 border-t border-line pt-10">
+          <h2 className="eyebrow">Recommend it when</h2>
+          <div className="mt-6 max-w-2xl">
+            <RecommendFor items={product.recommendFor} />
+          </div>
+        </section>
+      )}
 
       {related.length > 0 && (
         <section className="mt-12 border-t border-line pt-10">

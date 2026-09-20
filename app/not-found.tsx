@@ -6,13 +6,13 @@ export default function NotFound() {
       <p className="eyebrow">Gate closed</p>
       <h1 className="mt-4 text-4xl font-bold tracking-tight text-ink sm:text-5xl">Page not found</h1>
       <p className="mx-auto mt-5 max-w-md text-[15px] leading-relaxed text-taupe-deep">
-        This entry is not in the passport. The demo covers Rabanne and the Million collection.
+        This entry is not in the passport.
       </p>
       <Link
-        href="/line/million"
+        href="/brands"
         className="mt-9 inline-block rounded-full bg-bark px-7 py-3.5 text-sm font-medium text-paper transition-colors duration-200 hover:bg-ink"
       >
-        Back to the collection
+        Back to the brands
       </Link>
     </main>
   );

@@ -29,28 +29,40 @@ export function ProductHero({ product }: { product: CatalogueProduct }) {
       </div>
 
       <div className="lg:border-l lg:border-line lg:pl-12">
-        <FamilyLine families={product.fragranceFamily} className="text-center text-2xl lg:text-left" />
+        <FamilyLine label={product.familyLabel} className="text-center text-2xl lg:text-left" />
 
-        <NoteRow notes={product.keyNotes} className="mt-6 lg:justify-start" />
+        <NoteRow
+          notes={product.keyNotes}
+          signatureNotes={product.signatureNotes}
+          className="mt-6 lg:justify-start"
+        />
 
         <p className="mt-8 border-t border-line pt-8 text-center text-3xl font-bold lowercase text-ink lg:text-left">
           {product.descriptor}
         </p>
 
-        <p className="mt-6 max-w-md text-center text-[15px] leading-relaxed text-taupe-deep lg:text-left">
-          {product.shortDescription}
-        </p>
+        {product.positioning && (
+          <p className="mt-4 text-center text-[15px] text-taupe lg:text-left">{product.positioning}</p>
+        )}
 
-        <div className="mt-8 border-t border-line pt-6 text-center lg:text-left">
-          <p className="eyebrow">Perfumers</p>
-          <ul className="mt-3 space-y-1">
-            {product.perfumers.map((perfumer) => (
-              <li key={perfumer} className="text-[15px] lowercase text-ink">
-                {perfumer}
-              </li>
-            ))}
-          </ul>
-        </div>
+        {product.shortDescription && (
+          <p className="mt-6 max-w-md text-center text-[15px] leading-relaxed text-taupe-deep lg:text-left">
+            {product.shortDescription}
+          </p>
+        )}
+
+        {product.perfumers && product.perfumers.length > 0 && (
+          <div className="mt-8 border-t border-line pt-6 text-center lg:text-left">
+            <p className="eyebrow">Perfumers</p>
+            <ul className="mt-3 space-y-1">
+              {product.perfumers.map((perfumer) => (
+                <li key={perfumer} className="text-[15px] lowercase text-ink">
+                  {perfumer}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
 
         <ProductActions product={product} />
       </div>

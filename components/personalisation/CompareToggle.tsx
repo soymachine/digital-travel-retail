@@ -5,18 +5,21 @@ import { MAX_COMPARE, usePassport } from "@/components/personalisation/PassportS
 export function CompareToggle({
   productId,
   productName,
+  lineId,
 }: {
   productId: string;
   productName: string;
+  lineId: string;
 }) {
-  const { isComparing, toggleCompare, compare, ready } = usePassport();
+  const { isComparing, toggleCompare, compare, compareLine, ready } = usePassport();
   const active = ready && isComparing(productId);
-  const full = compare.length >= MAX_COMPARE && !active;
+  // The cap only applies inside the collection being compared.
+  const full = compareLine === lineId && compare.length >= MAX_COMPARE && !active;
 
   return (
     <button
       type="button"
-      onClick={() => toggleCompare(productId)}
+      onClick={() => toggleCompare(productId, lineId)}
       disabled={full}
       aria-pressed={active}
       title={full ? `You can compare up to ${MAX_COMPARE} products` : undefined}

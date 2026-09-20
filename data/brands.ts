@@ -11,4 +11,20 @@ export const brands: Brand[] = [
     code: "RBN",
     lineIds: ["million"],
   },
+  {
+    id: "carolina-herrera",
+    slug: "carolina-herrera",
+    name: "Carolina Herrera",
+    tagline: ["Bold masculinity.", "Contrast and contradiction."],
+    code: "CH",
+    lineIds: ["bad-boy"],
+  },
+  {
+    id: "jean-paul-gaultier",
+    slug: "jean-paul-gaultier",
+    name: "Jean Paul Gaultier",
+    tagline: ["Seduction, made mischievous."],
+    code: "JPG",
+    lineIds: ["le-beau"],
+  },
 ];

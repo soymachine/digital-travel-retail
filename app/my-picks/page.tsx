@@ -12,11 +12,11 @@ export default function MyPicksPage() {
   return (
     <main id="main" className="mx-auto max-w-6xl animate-page-in px-4 py-6 sm:px-6 sm:py-10">
       <Link
-        href="/line/million"
+        href="/brands"
         className="inline-flex items-center gap-2 text-sm text-taupe-deep transition-colors duration-200 hover:text-ink"
       >
         <span aria-hidden>←</span>
-        Million collection
+        Brands
       </Link>
 
       <p className="eyebrow mt-6">My passport</p>

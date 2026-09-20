@@ -49,9 +49,9 @@ export function ComparisonColumns({ products }: { products: CatalogueProduct[] }
               />
             </div>
 
-            <FamilyLine families={product.fragranceFamily} className="text-xl" />
+            <FamilyLine label={product.familyLabel} className="text-xl" />
 
-            <NoteRow notes={product.keyNotes} className="mt-5" />
+            <NoteRow notes={product.keyNotes} signatureNotes={product.signatureNotes} className="mt-5" />
 
             <p className="mt-5 text-lg font-bold lowercase text-ink">{product.descriptor}</p>
 
@@ -61,7 +61,7 @@ export function ComparisonColumns({ products }: { products: CatalogueProduct[] }
 
             <button
               type="button"
-              onClick={() => toggleCompare(product.id)}
+              onClick={() => toggleCompare(product.id, product.lineId)}
               className="mt-5 text-sm text-taupe transition-colors duration-200 hover:text-cocoa"
             >
               Remove from comparison

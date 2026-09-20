@@ -26,6 +26,7 @@ type PassportContextValue = {
   favourites: string[];
   stickers: Record<string, string[]>;
   compare: string[];
+  compareLine: string | null;
   isFavourite: (productId: string) => boolean;
   toggleFavourite: (productId: string) => void;
   stickersFor: (productId: string) => string[];
@@ -33,7 +34,8 @@ type PassportContextValue = {
   /** Replace a product's stamps wholesale — what the "Save stamps" panel does. */
   setStickers: (productId: string, stickerIds: string[]) => void;
   isComparing: (productId: string) => boolean;
-  toggleCompare: (productId: string) => void;
+  /** Selecting from another collection starts that collection's comparison. */
+  toggleCompare: (productId: string, lineId: string) => void;
   clearCompare: () => void;
   stickerCount: number;
   reset: () => void;
@@ -109,8 +111,14 @@ export function PassportStateProvider({ children }: { children: ReactNode }) {
     });
   }, []);
 
-  const toggleCompare = useCallback((productId: string) => {
+  const toggleCompare = useCallback((productId: string, lineId: string) => {
     setState((current) => {
+      // A comparison holds one collection, so picking from another starts over.
+      if (current.compareLine !== lineId) {
+        track({ name: "comparison_started", productIds: [productId] });
+        return { ...current, compare: [productId], compareLine: lineId };
+      }
+
       const active = current.compare.includes(productId);
 
       if (!active && current.compare.length >= MAX_COMPARE) {
@@ -123,12 +131,12 @@ export function PassportStateProvider({ children }: { children: ReactNode }) {
         : [...current.compare, productId];
 
       if (!active) track({ name: "comparison_started", productIds: compare });
-      return { ...current, compare };
+      return { ...current, compare, compareLine: compare.length ? lineId : null };
     });
   }, []);
 
   const clearCompare = useCallback(() => {
-    setState((current) => ({ ...current, compare: [] }));
+    setState((current) => ({ ...current, compare: [], compareLine: null }));
   }, []);
 
   const reset = useCallback(() => setState(emptyPassportState), []);
@@ -144,6 +152,7 @@ export function PassportStateProvider({ children }: { children: ReactNode }) {
       favourites: state.favourites,
       stickers: state.stickers,
       compare: state.compare,
+      compareLine: state.compareLine,
       isFavourite: (productId) => state.favourites.includes(productId),
       toggleFavourite,
       stickersFor: (productId) => state.stickers[productId] ?? [],
