@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 
 import { BottomNav } from "@/components/layout/BottomNav";
-import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
+import { SiteChrome } from "@/components/layout/SiteChrome";
 import { PassportStateProvider } from "@/components/personalisation/PassportStateProvider";
 
 import "./globals.css";
@@ -28,12 +28,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             Skip to content
           </a>
           <Header />
-          <div className="flex min-h-[calc(100vh-4rem)] flex-col">
-            <div className="flex-1">{children}</div>
-            <Footer />
-          </div>
-          {/* Clearance for the mobile tab bar. */}
-          <div aria-hidden className="h-20 md:hidden" />
+          <SiteChrome>{children}</SiteChrome>
           <BottomNav />
         </PassportStateProvider>
       </body>

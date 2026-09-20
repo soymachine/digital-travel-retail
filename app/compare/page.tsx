@@ -14,7 +14,7 @@ export default function ComparePage() {
       </h1>
       <p className="mt-4 max-w-xl text-[15px] leading-relaxed text-taupe-deep">
         For the moment in the conversation when the customer is deciding between two or three
-        fragrances. One collection at a time — each brand sets its own intensity scale.
+        fragrances — from one house or from several.
       </p>
 
       <div className="mt-10">

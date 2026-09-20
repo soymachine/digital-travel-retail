@@ -5,6 +5,8 @@
 @layer base {
   :root {
     color-scheme: light;
+    /* Kept in step with the header's h-14, so a page can fill the rest. */
+    --header-height: 3.5rem;
   }
 
   html {

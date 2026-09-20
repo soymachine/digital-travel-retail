@@ -9,8 +9,6 @@ export type PassportState = {
   favourites: string[];
   stickers: Record<string, string[]>;
   compare: string[];
-  /** Comparison is scoped to one collection at a time. */
-  compareLine: string | null;
 };
 
 export const STORAGE_KEY = "sales-passport:v1";
@@ -19,7 +17,6 @@ export const emptyPassportState: PassportState = {
   favourites: [],
   stickers: {},
   compare: [],
-  compareLine: null,
 };
 
 function isStringArray(value: unknown): value is string[] {
@@ -43,7 +40,6 @@ export function normalisePassportState(value: unknown): PassportState {
     favourites: isStringArray(raw.favourites) ? raw.favourites : [],
     stickers,
     compare: isStringArray(raw.compare) ? raw.compare.slice(0, 3) : [],
-    compareLine: typeof raw.compareLine === "string" ? raw.compareLine : null,
   };
 }
 

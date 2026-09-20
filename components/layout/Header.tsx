@@ -18,7 +18,7 @@ export function Header() {
   return (
     <header className="sticky top-0 z-40 border-b border-line bg-paper-panel/95 backdrop-blur">
       {/* Mobile */}
-      <div className="flex items-center justify-between px-4 py-3 md:hidden">
+      <div className="flex h-14 items-center justify-between px-4 md:hidden">
         {isHome ? (
           <span className="w-9" aria-hidden />
         ) : (
@@ -53,7 +53,7 @@ export function Header() {
       </div>
 
       {/* Desktop */}
-      <div className="mx-auto hidden max-w-6xl items-center justify-between px-6 py-4 md:flex">
+      <div className="mx-auto hidden h-14 max-w-6xl items-center justify-between px-6 md:flex">
         <Link href="/" className="text-base font-medium uppercase tracking-signage text-ink">
           Travel Retail
         </Link>

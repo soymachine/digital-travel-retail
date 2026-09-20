@@ -41,8 +41,9 @@ and silently ignores the `@/*` path aliases if it is installed.
    perfumers, then the story, selling arguments and when to recommend it.
 6. *+ → New → Save stamps*. Back on the collection the stamp is on the card,
    and it is also a filter.
-7. **`/compare`** — pick up to three and read them side by side, with the
-   fresh → intense axis underneath.
+7. **`/compare`** — pick up to three, from one house or several, and read them
+   side by side. The fresh → intense axis appears when they share a collection,
+   since each house sets that scale for its own line.
 8. **`/my-picks`** — stamps and favourites, still there after a refresh.
 9. **`/sales`** — a placeholder for the next phase, and it says so.
 
@@ -53,10 +54,10 @@ Keyboard: `/` focuses search, `Escape` clears it.
 The interface follows the supplied mockups: warm paper, a tight grotesk, brand
 brown for titles and active navigation, and rubber stamps instead of web tags.
 
-The home page is the one screen that breaks the site's max width: the cover
-photograph runs the full width of the viewport, whole from the small breakpoint
-up and capped so it never runs past the fold, and cropped to a taller band on
-phones so the passport stays large.
+The home page is a single screen: the cover photograph fills the viewport below
+the header, edge to edge, with no footer and nothing to scroll to, and the
+button anchored to the bottom. Every other page keeps the site's max width and
+its footer.
 
 Navigation has three sections — **Brands**, **Comparisons**, **Sales** — as a
 top bar on desktop and a tab bar at the bottom on mobile, where the header

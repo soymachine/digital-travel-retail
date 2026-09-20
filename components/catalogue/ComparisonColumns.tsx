@@ -32,12 +32,16 @@ export function ComparisonColumns({ products }: { products: CatalogueProduct[] }
               index > 0 ? "lg:border-l lg:border-line" : "",
             ].join(" ")}
           >
-            <h3 className="text-2xl font-bold tracking-tight text-ink">
+            <p className="text-sm lowercase text-taupe">{product.brand.name}</p>
+            <h3 className="mt-1 text-2xl font-bold tracking-tight text-ink">
               <Link href={`/product/${product.slug}`} className="hover:text-cocoa">
                 {product.name}
               </Link>
             </h3>
-            <p className="mt-1 text-sm text-taupe-deep">{product.concentration.toLowerCase()}</p>
+            <p className="mt-1 text-sm text-taupe-deep">
+              {product.concentration.toLowerCase()}
+              {product.year ? ` · ${product.year}` : ""}
+            </p>
 
             <div className="relative my-7 h-56 w-full">
               <Image
@@ -61,7 +65,7 @@ export function ComparisonColumns({ products }: { products: CatalogueProduct[] }
 
             <button
               type="button"
-              onClick={() => toggleCompare(product.id, product.lineId)}
+              onClick={() => toggleCompare(product.id)}
               className="mt-5 text-sm text-taupe transition-colors duration-200 hover:text-cocoa"
             >
               Remove from comparison
@@ -79,11 +83,25 @@ export function ComparisonColumns({ products }: { products: CatalogueProduct[] }
 /**
  * Where each fragrance sits between fresh and intense.
  *
- * The values are demo estimates pending brand validation — see `intensity` in
- * /types/catalogue.ts.
+ * Each house publishes this axis for its own collection, so the scales are not
+ * shared: a mixed comparison says so instead of drawing one.
  */
 function IntensityAxis({ products }: { products: CatalogueProduct[] }) {
   const ordered = [...products].sort((a, b) => a.intensity - b.intensity);
+  const singleCollection = new Set(products.map((product) => product.lineId)).size === 1;
+
+  if (!singleCollection) {
+    return (
+      <section className="mt-14 border-t border-line pt-8">
+        <h3 className="sr-only">Intensity</h3>
+        <p className="text-sm leading-relaxed text-taupe">
+          The fresh → intense axis is shown when every fragrance comes from the same collection:
+          each house sets that scale for its own line, so positions from different houses cannot be
+          read against each other.
+        </p>
+      </section>
+    );
+  }
 
   return (
     <section className="mt-14 border-t border-line pt-8">
