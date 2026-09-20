@@ -42,6 +42,15 @@ export type Product = {
   /** Two-word olfactive signature, e.g. "Solar & sensual". */
   descriptor: string;
 
+  /**
+   * Position on the fresh → intense axis of the comparison view, 0-100.
+   *
+   * DEMO ESTIMATE, pending validation: the brand has not supplied an intensity
+   * scale, so these are placed by concentration and olfactive profile. Replace
+   * with approved values before client-facing use.
+   */
+  intensity: number;
+
   shortDescription: string;
 
   /** Longer-form product story shown lower on the product page. */
@@ -76,8 +85,11 @@ export type Product = {
 export type Sticker = {
   id: string;
   label: string;
-  /** Short signage abbreviation used inside the stamp device. */
+  /** Short signage abbreviation, used where a full stamp does not fit. */
   short: string;
+  /** Which placeholder stamp artwork to draw. */
+  shape: "rect" | "circle";
+  tone: "red" | "brown";
 };
 
 /** A product resolved together with its brand and line, ready for the UI. */

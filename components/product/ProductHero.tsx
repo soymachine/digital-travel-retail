@@ -1,55 +1,55 @@
 import Image from "next/image";
 
-import { BoardingPassLabel } from "@/components/passport/BoardingPassLabel";
+import { FamilyLine } from "@/components/product/FamilyLine";
+import { NoteRow } from "@/components/notes/NoteIcon";
 import { ProductActions } from "@/components/product/ProductActions";
+import { StampRail } from "@/components/personalisation/StampRail";
 import type { CatalogueProduct } from "@/types/catalogue";
 
 /**
- * First viewport of the product page: everything an advisor needs mid-conversation
- * — bottle, identity, fragrance family and the personalisation controls.
+ * Everything an advisor needs mid-conversation, in one screen: the bottle, the
+ * stamps they have put on it, the family, the notes and the descriptor.
  */
 export function ProductHero({ product }: { product: CatalogueProduct }) {
   return (
-    <div className="grid gap-8 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-12">
-      <div className="relative border border-ivory-line bg-ivory-deep/50 doc-pattern px-6 py-10">
-        <div className="relative mx-auto h-80 w-full sm:h-96">
-          <Image
-            src={product.productImage}
-            alt={`${product.brand.name} ${product.name} bottle`}
-            fill
-            sizes="(max-width: 1024px) 90vw, 40vw"
-            priority
-            className="object-contain"
-          />
-        </div>
-        <span className="signage-sm absolute bottom-4 left-4 text-ink/35">{product.productCode}</span>
-        {product.isNew && (
-          <span className="signage-sm absolute right-4 top-4 border border-gold-deep/60 px-2 py-1 text-gold-deep">
-            New
-          </span>
-        )}
+    <div className="grid items-start gap-10 lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] lg:gap-12">
+      <div className="relative mx-auto h-72 w-full max-w-sm sm:h-96">
+        <Image
+          src={product.productImage}
+          alt={`${product.brand.name} ${product.name} bottle`}
+          fill
+          sizes="(max-width: 1024px) 80vw, 32vw"
+          priority
+          className="object-contain"
+        />
       </div>
 
-      <div className="flex flex-col justify-center">
-        <p className="signage text-ink/45">{product.brand.name} · {product.line.name}</p>
-        <h1 className="mt-3 font-display text-4xl leading-tight text-ink sm:text-5xl">
-          {product.name}
-        </h1>
-        <p className="signage mt-3 text-ink/60">{product.concentration}</p>
+      <div className="lg:w-44">
+        <StampRail productId={product.id} productName={product.name} size="lg" />
+      </div>
 
-        <p className="mt-6 max-w-xl text-base leading-relaxed text-ink/75">
+      <div className="lg:border-l lg:border-line lg:pl-12">
+        <FamilyLine families={product.fragranceFamily} className="text-center text-2xl lg:text-left" />
+
+        <NoteRow notes={product.keyNotes} className="mt-6 lg:justify-start" />
+
+        <p className="mt-8 border-t border-line pt-8 text-center text-3xl font-bold lowercase text-ink lg:text-left">
+          {product.descriptor}
+        </p>
+
+        <p className="mt-6 max-w-md text-center text-[15px] leading-relaxed text-taupe-deep lg:text-left">
           {product.shortDescription}
         </p>
 
-        <div className="mt-8 border-y border-ivory-line py-6">
-          <BoardingPassLabel
-            tone="ivory"
-            fields={[
-              { label: "Family", value: product.fragranceFamily.join(" / ") },
-              { label: "Signature", value: product.descriptor },
-              { label: "Type", value: product.concentration },
-            ]}
-          />
+        <div className="mt-8 border-t border-line pt-6 text-center lg:text-left">
+          <p className="eyebrow">Perfumers</p>
+          <ul className="mt-3 space-y-1">
+            {product.perfumers.map((perfumer) => (
+              <li key={perfumer} className="text-[15px] lowercase text-ink">
+                {perfumer}
+              </li>
+            ))}
+          </ul>
         </div>
 
         <ProductActions product={product} />

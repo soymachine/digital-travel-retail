@@ -27,20 +27,42 @@ and silently ignores the `@/*` path aliases if it is installed.
 
 ## Demo journey
 
-1. **Home** — the concept in one screen → *Explore Rabanne*.
-2. **`/brand/rabanne`** — passport identity page → *Million*.
-3. **`/line/million`** — the collection: search, filters, sort, 3 product cards.
-4. Search `ylang` → Million Gold Parfum + Million Red. Search `red` →
-   Million Red. Search works on names, families, notes, descriptors,
-   perfumers and selling copy.
-5. **`/product/million-gold`** — bottle, family, notes, story, selling
-   arguments, when to recommend it, perfumer credits.
-6. *Add sticker → Top Seller*. Go back to the collection: the stamp is on the
-   card, and it is also a filter.
-7. **`/compare`** — up to three fragrances side by side.
-8. **`/my-picks`** — favourites and stickers, still there after a refresh.
+1. **Home** — the passport on the counter → *Open passport*.
+2. **`/brand/rabanne`** — the brand and its collections.
+3. **`/line/million`** — the collection: search, filters, sort, three cards.
+4. Search `ylang` → Million Gold Parfum + Million Red. Search works on names,
+   families, notes, descriptors, perfumers and selling copy.
+5. **`/product/million-red`** — bottle, stamps, family, notes, descriptor,
+   perfumers, then the story, selling arguments and when to recommend it.
+6. *+ → New → Save stamps*. Back on the collection the stamp is on the card,
+   and it is also a filter.
+7. **`/compare`** — pick up to three and read them side by side, with the
+   fresh → intense axis underneath.
+8. **`/my-picks`** — stamps and favourites, still there after a refresh.
+9. **`/sales`** — a placeholder for the next phase, and it says so.
 
 Keyboard: `/` focuses search, `Escape` clears it.
+
+## Design
+
+The interface follows the supplied mockups: warm paper, a tight grotesk, brand
+brown for titles and active navigation, and rubber stamps instead of web tags.
+
+Navigation has three sections — **Brands**, **Comparisons**, **Sales** — as a
+top bar on desktop and a tab bar at the bottom on mobile, where the header
+becomes a passport cover (back, title, search).
+
+Three things on screen are **placeholders** waiting for real artwork, and each
+is isolated to one file so swapping it changes nothing else:
+
+| What | Where | Replace with |
+| --- | --- | --- |
+| Stamp artwork (NEW, TOP SELLER, …) | `components/stamps/StampArt.tsx` | the stamp images; `data/stickers.ts` picks shape and ink per stamp |
+| Note icons (rose, musk, coconut, …) | `components/notes/NoteIcon.tsx` | commissioned glyphs; notes map to a glyph by keyword, with a fallback |
+| Home cover photograph | `public/home/passport-hero.jpg` | the approved shot — this one is cropped from the mockup |
+
+Fonts are system faces (Helvetica Neue / Arial), so there is no webfont
+round-trip. Swapping in the brand typeface is a change to `tailwind.config.ts`.
 
 ## Deploying to GitHub Pages
 
@@ -77,11 +99,12 @@ npx serve out   # then browse the site under that sub-path
 ```
 /app                     routes (home, brand, line, product, compare, my-picks)
 /components
-  /layout                header, passport breadcrumb, footer
-  /passport              passport page frame, stamps, boarding-pass labels
+  /layout                header, mobile tab bar, footer
+  /stamps                stamp artwork and the <Stamp> wrapper
+  /notes                 note icons and the note row
   /catalogue             cards, grid, search, filters, sort, comparison
-  /product               hero, notes, family, selling arguments, related
-  /personalisation       stickers, favourites, local state provider
+  /product               hero, family line, selling arguments, recommendations
+  /personalisation       stamp rail and picker, favourites, local state
 /data                    brands.ts, productLines.ts, products.ts, stickers.ts
 /lib                     catalogue.ts (access), search.ts, storage.ts, analytics.ts
 /types                   catalogue.ts (the content model)
@@ -118,6 +141,11 @@ Notes are held as a flat list rather than a top/heart/base pyramid, because the
 brand communicates three notes per fragrance without levels. If approved
 pyramid data arrives later, `keyNotes` in `types/catalogue.ts` is the single
 place to change.
+
+One field is **not** brand data: `intensity`, which positions each fragrance on
+the fresh → intense axis of the comparison. The brand supplied no intensity
+scale, so those three numbers are demo estimates, flagged as such in
+`types/catalogue.ts`, and should be replaced before client-facing use.
 
 ## Not in this phase
 

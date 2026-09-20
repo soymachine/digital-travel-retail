@@ -1,35 +1,31 @@
 import type { Metadata } from "next";
 
 import { CompareView } from "@/components/catalogue/CompareView";
-import { PassportNav } from "@/components/layout/PassportNav";
-import { PassportFrame } from "@/components/passport/PassportFrame";
-import { getProducts } from "@/lib/catalogue";
+import { getBrand, getLine, getProducts } from "@/lib/catalogue";
 
-export const metadata: Metadata = { title: "Compare" };
+export const metadata: Metadata = { title: "Comparisons" };
 
 export default function ComparePage() {
   const products = getProducts();
+  const brand = getBrand("rabanne")!;
+  const line = getLine("million")!;
 
   return (
-    <>
-      <PassportNav trail={[{ label: "Passport", href: "/" }, { label: "Compare" }]} />
+    <main id="main" className="mx-auto max-w-6xl animate-page-in px-4 py-6 sm:px-6 sm:py-10">
+      <p className="eyebrow">Comparisons</p>
+      <h1 className="mt-3 flex flex-wrap items-baseline gap-x-5 gap-y-1">
+        <span className="text-4xl font-bold lowercase tracking-tight text-ink sm:text-5xl">
+          {brand.name}
+        </span>
+        <span aria-hidden className="hidden h-9 w-px bg-line sm:block" />
+        <span className="text-4xl font-bold tracking-tight text-cocoa sm:text-5xl">
+          {line.name} collection
+        </span>
+      </h1>
 
-      <main id="main" className="mx-auto max-w-6xl px-4 py-10 sm:px-6 sm:py-14">
-        <PassportFrame page="05" code="RBN / MLN / COMPARE">
-          <p className="signage-sm text-ink/45">Side by side</p>
-          <h1 className="mt-3 font-display text-4xl leading-tight text-ink sm:text-5xl">
-            Compare products
-          </h1>
-          <p className="mt-5 max-w-xl text-sm leading-relaxed text-ink/65">
-            For the moment in the conversation when the customer is deciding between two or three
-            fragrances.
-          </p>
-
-          <div className="mt-10">
-            <CompareView products={products} />
-          </div>
-        </PassportFrame>
-      </main>
-    </>
+      <div className="mt-10">
+        <CompareView products={products} />
+      </div>
+    </main>
   );
 }

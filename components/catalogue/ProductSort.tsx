@@ -8,7 +8,7 @@ const options: { value: SortKey; label: string }[] = [
   { value: "default", label: "Collection order" },
   { value: "name-asc", label: "Name A–Z" },
   { value: "name-desc", label: "Name Z–A" },
-  { value: "family", label: "Fragrance family" },
+  { value: "family", label: "Olfactive family" },
 ];
 
 export function ProductSort({
@@ -22,14 +22,14 @@ export function ProductSort({
 
   return (
     <div className="sm:w-56">
-      <label htmlFor={selectId} className="signage-sm text-ink/50">
+      <label htmlFor={selectId} className="eyebrow-muted">
         Sort
       </label>
       <select
         id={selectId}
         value={value}
         onChange={(event) => onChange(event.target.value as SortKey)}
-        className="mt-2 w-full border border-ink/20 bg-ivory px-4 py-3 font-mono text-xs uppercase tracking-wide2 text-ink focus:border-gold-deep focus:outline-none"
+        className="mt-2 w-full rounded-full border border-line bg-paper-panel px-5 py-3 text-[15px] text-ink focus:border-cocoa-soft focus:outline-none"
       >
         {options.map((option) => (
           <option key={option.value} value={option.value}>

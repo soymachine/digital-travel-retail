@@ -1,12 +1,17 @@
+/** The machine-readable strip along the bottom edge of a passport page. */
 export function Footer() {
   return (
-    <footer className="mt-16 border-t border-ink-line">
-      <div className="mx-auto flex max-w-6xl flex-col gap-3 px-4 py-8 sm:flex-row sm:items-center sm:justify-between sm:px-6">
-        <p className="signage-sm text-ivory/45">
-          Travel Retail Perfume Sales Passport — demonstration build
+    <footer className="mt-16 border-t border-line">
+      <div className="mx-auto max-w-6xl px-4 py-6 sm:px-6">
+        <p
+          aria-hidden
+          className="overflow-hidden whitespace-nowrap font-mono text-xs tracking-wide2 text-taupe/70"
+        >
+          P&lt;TRAVEL&lt;RETAIL&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;
         </p>
-        <p className="signage-sm text-ivory/35">
-          Demo content · product copy pending brand approval
+        <p className="sr-only">Travel Retail Perfume Sales Passport — demonstration build.</p>
+        <p className="mt-3 text-[11px] text-taupe">
+          Demonstration build · product copy pending brand approval
         </p>
       </div>
     </footer>

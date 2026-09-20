@@ -9,7 +9,14 @@ import { ProductSearch } from "@/components/catalogue/ProductSearch";
 import { ProductSort } from "@/components/catalogue/ProductSort";
 import { usePassport } from "@/components/personalisation/PassportStateProvider";
 import { track } from "@/lib/analytics";
-import { emptyFilters, filterProducts, hasActiveFilters, sortProducts, type CatalogueFilters, type SortKey } from "@/lib/search";
+import {
+  emptyFilters,
+  filterProducts,
+  hasActiveFilters,
+  sortProducts,
+  type CatalogueFilters,
+  type SortKey,
+} from "@/lib/search";
 import type { CatalogueProduct } from "@/types/catalogue";
 
 export function CatalogueBrowser({
@@ -21,21 +28,22 @@ export function CatalogueBrowser({
   families: string[];
   concentrations: string[];
 }) {
-  const { stickers, compare, ready } = usePassport();
+  const { stickers, compare, stickerCount, ready } = usePassport();
   const [filters, setFilters] = useState<CatalogueFilters>(emptyFilters);
   const [sort, setSort] = useState<SortKey>("default");
   const searchRef = useRef<HTMLDivElement>(null);
 
-  const visible = useMemo(() => {
-    const filtered = filterProducts(products, filters, stickers);
-    return sortProducts(filtered, sort);
-  }, [filters, products, sort, stickers]);
+  const visible = useMemo(
+    () => sortProducts(filterProducts(products, filters, stickers), sort),
+    [filters, products, sort, stickers],
+  );
 
   // Keyboard shortcut: "/" focuses search, Escape clears it.
   useEffect(() => {
     function onKeyDown(event: KeyboardEvent) {
       const target = event.target as HTMLElement | null;
-      const typing = target?.tagName === "INPUT" || target?.tagName === "SELECT" || target?.isContentEditable;
+      const typing =
+        target?.tagName === "INPUT" || target?.tagName === "SELECT" || target?.isContentEditable;
 
       if (event.key === "/" && !typing) {
         event.preventDefault();
@@ -51,13 +59,15 @@ export function CatalogueBrowser({
   }, []);
 
   useEffect(() => {
-    if (filters.query.trim()) track({ name: "search", query: filters.query, results: visible.length });
+    if (filters.query.trim()) {
+      track({ name: "search", query: filters.query, results: visible.length });
+    }
   }, [filters.query, visible.length]);
 
   const active = hasActiveFilters(filters);
 
   return (
-    <div className="on-ivory space-y-8 text-ink">
+    <div className="space-y-8">
       <div ref={searchRef} className="flex flex-col gap-6 sm:flex-row sm:items-start">
         <ProductSearch
           value={filters.query}
@@ -74,34 +84,45 @@ export function CatalogueBrowser({
         onChange={setFilters}
       />
 
-      <div className="flex items-center justify-between gap-4 border-t border-ivory-line pt-4">
-        <p className="signage-sm text-ink/45">
+      <div className="flex flex-wrap items-center justify-between gap-4 border-t border-line pt-5">
+        <p className="text-sm text-taupe">
           {active ? "Filters active" : "No active filters"}
-          <span className="ml-3 hidden text-ink/30 sm:inline">Press / to search</span>
+          <span className="ml-3 hidden text-taupe/70 sm:inline">Press / to search</span>
         </p>
-        {active && (
-          <button
-            type="button"
-            onClick={() => setFilters(emptyFilters)}
-            className="signage border border-ink/20 px-3 py-2 text-ink/60 transition-colors duration-200 hover:border-gold-deep hover:text-gold-deep"
-          >
-            Clear filters
-          </button>
-        )}
+
+        <div className="flex items-center gap-3">
+          {ready && stickerCount > 0 && (
+            <Link
+              href="/my-picks"
+              className="rounded-full border border-line px-4 py-2 text-sm text-taupe-deep transition-colors duration-200 hover:border-cocoa-soft hover:text-ink"
+            >
+              My stamps <span className="font-medium text-cocoa">{stickerCount}</span>
+            </Link>
+          )}
+          {active && (
+            <button
+              type="button"
+              onClick={() => setFilters(emptyFilters)}
+              className="rounded-full border border-line px-4 py-2 text-sm text-taupe-deep transition-colors duration-200 hover:border-cocoa-soft hover:text-ink"
+            >
+              Clear filters
+            </button>
+          )}
+        </div>
       </div>
 
       {visible.length > 0 ? (
         <ProductGrid products={visible} />
       ) : (
-        <div className="animate-fade-in border border-dashed border-ink/25 px-6 py-16 text-center">
-          <p className="signage text-ink/70">No products found</p>
-          <p className="mx-auto mt-4 max-w-sm text-sm leading-relaxed text-ink/55">
-            Try another fragrance family, product name or note.
+        <div className="animate-fade-in rounded-xl border border-dashed border-line px-6 py-20 text-center">
+          <p className="text-xl font-bold text-ink">No fragrances found</p>
+          <p className="mx-auto mt-3 max-w-sm text-[15px] leading-relaxed text-taupe-deep">
+            Try another olfactive family, product name or note.
           </p>
           <button
             type="button"
             onClick={() => setFilters(emptyFilters)}
-            className="signage mt-6 border border-ink/25 px-4 py-2 text-ink transition-colors duration-200 hover:border-gold-deep hover:text-gold-deep"
+            className="mt-8 rounded-full bg-bark px-7 py-3.5 text-sm font-medium text-paper transition-colors duration-200 hover:bg-ink"
           >
             Clear filters
           </button>
@@ -109,13 +130,11 @@ export function CatalogueBrowser({
       )}
 
       {ready && compare.length > 0 && (
-        <div className="sticky bottom-4 z-20 flex animate-fade-in items-center justify-between gap-4 border border-teal-deep/40 bg-ink px-4 py-3 text-ivory">
-          <p className="signage-sm text-ivory/70">
-            {compare.length} selected for comparison
-          </p>
+        <div className="sticky bottom-24 z-20 flex animate-fade-in items-center justify-between gap-4 rounded-full border border-line bg-paper-panel px-5 py-3 shadow-lg md:bottom-6">
+          <p className="text-sm text-taupe-deep">{compare.length} selected for comparison</p>
           <Link
             href="/compare"
-            className="signage border border-teal px-4 py-2 text-teal transition-colors duration-200 hover:bg-teal hover:text-ink"
+            className="rounded-full bg-bark px-5 py-2.5 text-sm font-medium text-paper transition-colors duration-200 hover:bg-ink"
           >
             Open comparison
           </Link>

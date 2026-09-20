@@ -1,10 +1,8 @@
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 
 import { CatalogueBrowser } from "@/components/catalogue/CatalogueBrowser";
-import { PassportNav } from "@/components/layout/PassportNav";
-import { BoardingPassLabel } from "@/components/passport/BoardingPassLabel";
-import { PassportFrame } from "@/components/passport/PassportFrame";
 import {
   getBrandById,
   getConcentrations,
@@ -26,7 +24,7 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const { lineSlug } = await params;
   const line = getLine(lineSlug);
-  return { title: line ? line.name : "Collection not found" };
+  return { title: line ? `${line.name} collection` : "Collection not found" };
 }
 
 export default async function LinePage({ params }: Params) {
@@ -34,49 +32,39 @@ export default async function LinePage({ params }: Params) {
   const line = getLine(lineSlug);
   if (!line) notFound();
 
-  const resolvedBrand = getBrandById(line.brandId);
-  if (!resolvedBrand) notFound();
+  const brand = getBrandById(line.brandId);
+  if (!brand) notFound();
 
   const products = getProducts({ lineId: line.id });
 
   return (
-    <>
-      <PassportNav
-        trail={[
-          { label: "Passport", href: "/" },
-          { label: resolvedBrand.name, href: `/brand/${resolvedBrand.slug}` },
-          { label: line.name },
-        ]}
-      />
+    <main id="main" className="mx-auto max-w-6xl animate-page-in px-4 py-6 sm:px-6 sm:py-10">
+      <Link
+        href={`/brand/${brand.slug}`}
+        className="inline-flex items-center gap-2 text-sm text-taupe-deep transition-colors duration-200 hover:text-ink"
+      >
+        <span aria-hidden>←</span>
+        {brand.name}
+      </Link>
 
-      <main id="main" className="mx-auto max-w-6xl px-4 py-10 sm:px-6 sm:py-14">
-        <div className="border border-ink-line bg-ink-soft doc-pattern-dark px-5 py-10 sm:px-10">
-          <p className="signage text-gold">Boarding · {resolvedBrand.name} → {line.name}</p>
-          <h1 className="mt-6 font-display text-4xl leading-none tracking-wide2 text-ivory sm:text-6xl">
-            {line.name}
-          </h1>
-          <p className="signage mt-4 text-ivory/55">{line.strapline}</p>
+      <p className="eyebrow mt-6">Brands</p>
+      <h1 className="mt-3 flex flex-wrap items-baseline gap-x-5 gap-y-1">
+        <span className="text-4xl font-bold lowercase tracking-tight text-ink sm:text-5xl">
+          {brand.name}
+        </span>
+        <span aria-hidden className="hidden h-9 w-px bg-line sm:block" />
+        <span className="text-4xl font-bold tracking-tight text-cocoa sm:text-5xl">
+          {line.name} collection
+        </span>
+      </h1>
 
-          <div className="mt-10 border-t border-ink-line pt-6">
-            <BoardingPassLabel
-              fields={[
-                { label: "From", value: resolvedBrand.name },
-                { label: "To", value: line.name },
-                { label: "Products", value: String(products.length) },
-                { label: "Code", value: `${resolvedBrand.code} / ${line.code}` },
-              ]}
-            />
-          </div>
-        </div>
-
-        <PassportFrame page="03" code={`${resolvedBrand.code} / ${line.code} / CATALOGUE`} className="mt-8">
-          <CatalogueBrowser
-            products={products}
-            families={getFragranceFamilies(line.id)}
-            concentrations={getConcentrations(line.id)}
-          />
-        </PassportFrame>
-      </main>
-    </>
+      <div className="mt-10">
+        <CatalogueBrowser
+          products={products}
+          families={getFragranceFamilies(line.id)}
+          concentrations={getConcentrations(line.id)}
+        />
+      </div>
+    </main>
   );
 }

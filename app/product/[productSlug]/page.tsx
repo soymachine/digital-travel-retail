@@ -1,16 +1,11 @@
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 
-import { PassportNav } from "@/components/layout/PassportNav";
-import { PassportFrame } from "@/components/passport/PassportFrame";
-import { SectionLabel } from "@/components/passport/SectionLabel";
-import { FragranceFamily } from "@/components/product/FragranceFamily";
+import { ProductGrid } from "@/components/catalogue/ProductGrid";
 import { ProductHero } from "@/components/product/ProductHero";
-import { ProductNotes } from "@/components/product/ProductNotes";
-import { ProductTags } from "@/components/product/ProductTags";
 import { RecommendFor } from "@/components/product/RecommendFor";
 import { SellingArguments } from "@/components/product/SellingArguments";
-import { SimilarProducts } from "@/components/product/SimilarProducts";
 import { getProduct, getProducts, getProductsByIds } from "@/lib/catalogue";
 
 type Params = { params: Promise<{ productSlug: string }> };
@@ -26,7 +21,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const { productSlug } = await params;
   const product = getProduct(productSlug);
   return {
-    title: product ? `${product.name}` : "Product not found",
+    title: product ? product.name : "Product not found",
     description: product?.shortDescription,
   };
 }
@@ -39,104 +34,59 @@ export default async function ProductPage({ params }: Params) {
   const related = getProductsByIds(product.relatedProducts);
 
   return (
-    <>
-      <PassportNav
-        trail={[
-          { label: "Passport", href: "/" },
-          { label: product.brand.name, href: `/brand/${product.brand.slug}` },
-          { label: product.line.name, href: `/line/${product.line.slug}` },
-          { label: product.name },
-        ]}
-      />
+    <main id="main" className="mx-auto max-w-6xl animate-page-in px-4 py-6 sm:px-6 sm:py-10">
+      <Link
+        href={`/line/${product.line.slug}`}
+        className="inline-flex items-center gap-2 text-sm text-taupe-deep transition-colors duration-200 hover:text-ink"
+      >
+        <span aria-hidden>←</span>
+        {product.line.name} collection
+      </Link>
 
-      <main id="main" className="mx-auto max-w-6xl px-4 py-10 sm:px-6 sm:py-14">
-        {/* The frame animates, so it owns a stacking context: lift it above the
-            related-products section or the sticker panel opens behind those cards. */}
-        <PassportFrame page="04" code={product.productCode} className="relative z-10">
-          <ProductHero product={product} />
+      <header className="mt-6 flex flex-wrap items-end gap-x-6 gap-y-2">
+        <h1 className="flex flex-wrap items-baseline gap-x-5 gap-y-1">
+          <span className="text-4xl font-bold lowercase tracking-tight text-ink sm:text-5xl">
+            {product.brand.name}
+          </span>
+          <span aria-hidden className="hidden h-9 w-px bg-line sm:block" />
+          <span className="text-4xl font-bold tracking-tight text-cocoa sm:text-5xl">
+            {product.name}
+          </span>
+        </h1>
+      </header>
+      <p className="mt-2 text-lg text-taupe-deep">{product.concentration.toLowerCase()}</p>
 
-          <div className="mt-14 space-y-14">
-            <section>
-              <SectionLabel index="01" tone="ivory">
-                Fragrance family
-              </SectionLabel>
-              <div className="mt-6">
-                <FragranceFamily families={product.fragranceFamily} />
-              </div>
-            </section>
+      <div className="mt-10">
+        <ProductHero product={product} />
+      </div>
 
-            <section>
-              <SectionLabel index="02" tone="ivory">
-                Key notes
-              </SectionLabel>
-              <div className="mt-6">
-                <ProductNotes notes={product.keyNotes} />
-              </div>
-            </section>
+      <section className="mt-16 border-t border-line pt-10">
+        <h2 className="eyebrow">The story</h2>
+        <p className="mt-4 max-w-3xl text-lg leading-relaxed text-taupe-deep">{product.story}</p>
+      </section>
 
-            <section>
-              <SectionLabel index="03" tone="ivory">
-                The story
-              </SectionLabel>
-              <p className="mt-6 max-w-2xl font-display text-xl leading-relaxed text-ink/80">
-                {product.story}
-              </p>
-            </section>
+      <section className="mt-12 border-t border-line pt-10">
+        <h2 className="eyebrow">Selling arguments</h2>
+        <div className="mt-6">
+          <SellingArguments arguments={product.sellingArguments} />
+        </div>
+      </section>
 
-            <section>
-              <SectionLabel index="04" tone="ivory">
-                Selling arguments
-              </SectionLabel>
-              <div className="mt-6">
-                <SellingArguments arguments={product.sellingArguments} />
-              </div>
-            </section>
+      <section className="mt-12 border-t border-line pt-10">
+        <h2 className="eyebrow">Recommend it when</h2>
+        <div className="mt-6 max-w-2xl">
+          <RecommendFor items={product.recommendFor} />
+        </div>
+      </section>
 
-            <section>
-              <SectionLabel index="05" tone="ivory">
-                Recommend it when
-              </SectionLabel>
-              <div className="mt-6 max-w-2xl">
-                <RecommendFor items={product.recommendFor} />
-              </div>
-            </section>
-
-            {/* Sits above the related-products section so the picker panel is never covered. */}
-            <section>
-              <SectionLabel index="06" tone="ivory">
-                Perfumers
-              </SectionLabel>
-              <ul className="mt-6 flex flex-wrap gap-x-8 gap-y-3">
-                {product.perfumers.map((perfumer) => (
-                  <li key={perfumer} className="font-display text-lg text-ink/80">
-                    {perfumer}
-                  </li>
-                ))}
-              </ul>
-            </section>
-
-            <section className="relative z-30">
-              <SectionLabel index="07" tone="ivory">
-                My stickers
-              </SectionLabel>
-              <div className="mt-6">
-                <ProductTags productId={product.id} productName={product.name} />
-              </div>
-            </section>
+      {related.length > 0 && (
+        <section className="mt-12 border-t border-line pt-10">
+          <h2 className="eyebrow">You may also like</h2>
+          <div className="mt-6">
+            <ProductGrid products={related} />
           </div>
-        </PassportFrame>
-
-        {related.length > 0 && (
-          <section className="mt-12">
-            <SectionLabel index="08" tone="ink">
-              You may also like
-            </SectionLabel>
-            <div className="mt-6">
-              <SimilarProducts products={related} />
-            </div>
-          </section>
-        )}
-      </main>
-    </>
+        </section>
+      )}
+    </main>
   );
 }

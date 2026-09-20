@@ -7,6 +7,7 @@ import type { Product } from "@/types/catalogue";
  * perfumer credits come from Rabanne. The surrounding sales copy
  * (shortDescription, story, sellingArguments, recommendFor) is written for the
  * demo from those facts and still needs validation before client-facing use.
+ * `intensity` is a demo estimate too — see the note on the type.
  * No pricing, longevity, sustainability or award claims are included by design.
  */
 export const products: Product[] = [
@@ -21,6 +22,7 @@ export const products: Product[] = [
 
     fragranceFamily: ["Floral"],
     descriptor: "Solar & sensual",
+    intensity: 34,
 
     shortDescription:
       "A solar and sensual floral built on rose, a bouquet of white flowers and musk.",
@@ -63,6 +65,7 @@ export const products: Product[] = [
 
     fragranceFamily: ["Woody", "Floral"],
     descriptor: "Luminous & woody",
+    intensity: 62,
 
     shortDescription:
       "A luminous woody floral combining ylang-ylang and jasmine with a sandalwood base.",
@@ -104,6 +107,7 @@ export const products: Product[] = [
 
     fragranceFamily: ["Ambery", "Gourmand"],
     descriptor: "Sensual & gourmand",
+    intensity: 84,
 
     shortDescription:
       "A sensual ambery gourmand combining creamy coconut, solar ylang-ylang and vanilla.",

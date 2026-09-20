@@ -5,12 +5,10 @@ import { usePassport } from "@/components/personalisation/PassportStateProvider"
 export function FavouriteButton({
   productId,
   productName,
-  tone = "ink",
   className = "",
 }: {
   productId: string;
   productName: string;
-  tone?: "ink" | "ivory";
   className?: string;
 }) {
   const { isFavourite, toggleFavourite, ready } = usePassport();
@@ -22,13 +20,9 @@ export function FavouriteButton({
       onClick={() => toggleFavourite(productId)}
       aria-pressed={active}
       aria-label={active ? `Remove ${productName} from favourites` : `Add ${productName} to favourites`}
-      title={active ? "Remove from favourites" : "Add to favourites"}
       className={[
-        "inline-flex h-10 w-10 items-center justify-center rounded-full border transition-colors duration-200",
-        tone === "ink"
-          ? "border-ivory/25 hover:border-gold"
-          : "border-ink/20 hover:border-gold-deep",
-        active ? "border-gold text-gold" : tone === "ink" ? "text-ivory/60" : "text-ink/50",
+        "inline-flex h-11 w-11 items-center justify-center rounded-full border transition-colors duration-200",
+        active ? "border-cocoa text-cocoa" : "border-line text-taupe hover:border-cocoa-soft hover:text-cocoa",
         className,
       ].join(" ")}
     >

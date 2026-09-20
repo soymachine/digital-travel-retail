@@ -1,12 +1,12 @@
 export default function Loading() {
   return (
-    <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6" role="status" aria-live="polite">
+    <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6" role="status" aria-live="polite">
       <span className="sr-only">Loading</span>
-      <div className="h-8 w-48 animate-pulse bg-ink-soft" />
-      <div className="mt-6 h-64 animate-pulse bg-ink-soft" />
-      <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="h-6 w-32 animate-pulse rounded bg-paper-deep" />
+      <div className="mt-5 h-12 w-80 max-w-full animate-pulse rounded bg-paper-deep" />
+      <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {[0, 1, 2].map((item) => (
-          <div key={item} className="h-96 animate-pulse bg-ink-soft" />
+          <div key={item} className="h-[30rem] animate-pulse rounded-xl bg-paper-deep" />
         ))}
       </div>
     </div>

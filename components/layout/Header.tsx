@@ -1,106 +1,82 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
 
-import { usePassport } from "@/components/personalisation/PassportStateProvider";
+import { isSectionActive, sections } from "@/components/layout/nav";
 
-const links = [
-  { href: "/line/million", label: "Catalogue" },
-  { href: "/compare", label: "Compare" },
-  { href: "/my-picks", label: "My Picks" },
-];
-
+/**
+ * Desktop: wordmark on the left, the three sections on the right with the
+ * active one underlined. Mobile: a passport-cover bar — back, title, search —
+ * with the sections living in the bottom tab bar instead.
+ */
 export function Header() {
   const pathname = usePathname();
-  const { favourites, compare, ready } = usePassport();
-  const [menuOpen, setMenuOpen] = useState(false);
-
-  useEffect(() => setMenuOpen(false), [pathname]);
+  const router = useRouter();
+  const isHome = pathname === "/";
 
   return (
-    <header className="sticky top-0 z-40 border-b border-ink-line bg-ink/95 backdrop-blur supports-[backdrop-filter]:bg-ink/80">
-      <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
-        <Link href="/" className="group flex items-center gap-3">
-          <span
-            aria-hidden
-            className="flex h-8 w-8 items-center justify-center border border-gold/60 font-display text-sm text-gold"
+    <header className="sticky top-0 z-40 border-b border-line bg-paper-panel/95 backdrop-blur">
+      {/* Mobile */}
+      <div className="flex items-center justify-between px-4 py-3 md:hidden">
+        {isHome ? (
+          <span className="w-9" aria-hidden />
+        ) : (
+          <button
+            type="button"
+            onClick={() => router.back()}
+            aria-label="Go back"
+            className="-ml-2 flex h-9 w-9 items-center justify-center text-ink"
           >
-            TR
-          </span>
-          <span className="signage text-ivory/80 transition-colors duration-200 group-hover:text-gold">
-            Sales Passport
-          </span>
+            <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden>
+              <path d="M15 5l-7 7 7 7" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </button>
+        )}
+
+        <Link href="/" className="text-sm font-medium uppercase tracking-signage text-ink">
+          {isHome ? "Travel Retail" : "Passport"}
         </Link>
 
-        <nav aria-label="Main" className="hidden items-center gap-7 md:flex">
-          {links.map((link) => {
-            const active = pathname.startsWith(link.href);
+        <Link
+          href="/line/million#search"
+          aria-label="Search products"
+          className="-mr-2 flex h-9 w-9 items-center justify-center text-ink"
+        >
+          <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden>
+            <circle cx="11" cy="11" r="6.5" />
+            <path d="m16 16 4.5 4.5" strokeLinecap="round" />
+          </svg>
+        </Link>
+      </div>
+
+      {/* Desktop */}
+      <div className="mx-auto hidden max-w-6xl items-center justify-between px-6 py-4 md:flex">
+        <Link href="/" className="text-base font-medium uppercase tracking-signage text-ink">
+          Travel Retail
+        </Link>
+
+        <nav aria-label="Main" className="flex items-center gap-9">
+          {sections.map((section) => {
+            const active = isSectionActive(pathname, section.match);
             return (
               <Link
-                key={link.href}
-                href={link.href}
+                key={section.href}
+                href={section.href}
                 aria-current={active ? "page" : undefined}
                 className={[
-                  "signage transition-colors duration-200",
-                  active ? "text-gold" : "text-ivory/65 hover:text-ivory",
+                  "border-b-2 pb-1 text-[15px] transition-colors duration-200",
+                  active
+                    ? "border-cocoa font-semibold text-ink"
+                    : "border-transparent text-taupe-deep hover:text-ink",
                 ].join(" ")}
               >
-                {link.label}
-                {link.href === "/compare" && ready && compare.length > 0 && (
-                  <span className="ml-2 text-teal">{compare.length}</span>
-                )}
+                {section.label}
               </Link>
             );
           })}
-
-          <Link
-            href="/my-picks"
-            aria-label={`Favourites: ${ready ? favourites.length : 0}`}
-            className="flex items-center gap-2 text-ivory/65 transition-colors duration-200 hover:text-gold"
-          >
-            <svg viewBox="0 0 24 24" className="h-4 w-4" aria-hidden focusable="false">
-              <path
-                d="M12 20.3 4.6 13a4.6 4.6 0 0 1 6.5-6.5l.9.9.9-.9A4.6 4.6 0 0 1 19.4 13Z"
-                fill={ready && favourites.length > 0 ? "currentColor" : "none"}
-                stroke="currentColor"
-                strokeWidth="1.4"
-                strokeLinejoin="round"
-              />
-            </svg>
-            <span className="signage-sm">{ready ? favourites.length : 0}</span>
-          </Link>
         </nav>
-
-        <button
-          type="button"
-          onClick={() => setMenuOpen((value) => !value)}
-          aria-expanded={menuOpen}
-          aria-controls="mobile-menu"
-          className="signage border border-ivory/25 px-3 py-2 text-ivory/75 md:hidden"
-        >
-          {menuOpen ? "Close" : "Menu"}
-        </button>
       </div>
-
-      {menuOpen && (
-        <nav
-          id="mobile-menu"
-          aria-label="Mobile"
-          className="animate-fade-in border-t border-ink-line px-4 pb-4 pt-2 md:hidden"
-        >
-          {links.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className="signage block border-b border-ink-line py-4 text-ivory/75 last:border-0"
-            >
-              {link.label}
-            </Link>
-          ))}
-        </nav>
-      )}
     </header>
   );
 }

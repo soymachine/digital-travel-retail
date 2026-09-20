@@ -5,7 +5,7 @@ import { useId } from "react";
 export function ProductSearch({
   value,
   onChange,
-  placeholder = "Search Million products...",
+  placeholder = "Search the collection...",
   resultCount,
 }: {
   value: string;
@@ -16,14 +16,14 @@ export function ProductSearch({
   const inputId = useId();
 
   return (
-    <div className="flex-1">
-      <label htmlFor={inputId} className="signage-sm text-ink/50">
+    <div id="search" className="flex-1 scroll-mt-24">
+      <label htmlFor={inputId} className="eyebrow-muted">
         Search
       </label>
-      <div className="mt-2 flex items-center gap-3 border border-ink/20 bg-ivory px-4 py-3 focus-within:border-gold-deep">
-        <svg viewBox="0 0 24 24" className="h-4 w-4 shrink-0 text-ink/40" aria-hidden focusable="false">
-          <circle cx="11" cy="11" r="6.4" fill="none" stroke="currentColor" strokeWidth="1.5" />
-          <path d="m16 16 4.5 4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+      <div className="mt-2 flex items-center gap-3 rounded-full border border-line bg-paper-panel px-5 py-3 focus-within:border-cocoa-soft">
+        <svg viewBox="0 0 24 24" className="h-4 w-4 shrink-0 text-taupe" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden>
+          <circle cx="11" cy="11" r="6.5" />
+          <path d="m16 16 4.5 4.5" strokeLinecap="round" />
         </svg>
         <input
           id={inputId}
@@ -32,20 +32,16 @@ export function ProductSearch({
           onChange={(event) => onChange(event.target.value)}
           placeholder={placeholder}
           autoComplete="off"
-          className="w-full bg-transparent font-mono text-xs uppercase tracking-wide2 text-ink placeholder:text-ink/35 focus:outline-none"
+          className="w-full bg-transparent text-[15px] text-ink placeholder:text-taupe focus:outline-none"
         />
         {value && (
-          <button
-            type="button"
-            onClick={() => onChange("")}
-            className="signage-sm text-ink/45 hover:text-gold-deep"
-          >
+          <button type="button" onClick={() => onChange("")} className="text-sm text-taupe hover:text-cocoa">
             Clear
           </button>
         )}
       </div>
-      <p aria-live="polite" className="signage-sm mt-2 text-ink/45">
-        {resultCount} {resultCount === 1 ? "product" : "products"}
+      <p aria-live="polite" className="mt-2 text-sm text-taupe">
+        {resultCount} {resultCount === 1 ? "fragrance" : "fragrances"}
       </p>
     </div>
   );

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 
-import { ComparisonTable } from "@/components/catalogue/ComparisonTable";
+import { ComparisonColumns } from "@/components/catalogue/ComparisonColumns";
 import { MAX_COMPARE, usePassport } from "@/components/personalisation/PassportStateProvider";
 import type { CatalogueProduct } from "@/types/catalogue";
 
@@ -13,31 +13,15 @@ export function CompareView({ products }: { products: CatalogueProduct[] }) {
   const selected = products.filter((product) => compare.includes(product.id));
 
   if (!ready) {
-    return <div className="h-64 animate-pulse border border-ink/10 bg-ivory-deep/50" aria-hidden />;
-  }
-
-  if (selected.length === 0) {
-    return (
-      <div className="on-ivory animate-fade-in border border-dashed border-ink/25 px-6 py-16 text-center text-ink">
-        <p className="signage text-ink/70">Nothing selected yet</p>
-        <p className="mx-auto mt-4 max-w-sm text-sm leading-relaxed text-ink/55">
-          Select up to {MAX_COMPARE} fragrances from the collection and they will line up here,
-          side by side.
-        </p>
-        <Link
-          href="/line/million"
-          className="signage mt-6 inline-block border border-ink/25 px-4 py-2 text-ink transition-colors duration-200 hover:border-gold-deep hover:text-gold-deep"
-        >
-          Go to the collection
-        </Link>
-      </div>
-    );
+    return <div className="h-72 animate-pulse rounded-xl bg-paper-deep" aria-hidden />;
   }
 
   return (
-    <div className="space-y-6">
-      <div className="on-ivory flex flex-wrap items-center justify-between gap-4 text-ink">
-        <p className="signage-sm text-ink/45">
+    <div>
+      {/* The picker stays on the page whether or not anything is selected — it
+          is the only place a fragrance enters the comparison. */}
+      <div className="flex flex-wrap items-center justify-between gap-4 border-b border-line pb-5">
+        <p className="text-sm text-taupe">
           {selected.length} of {MAX_COMPARE} selected
         </p>
         <div className="flex flex-wrap gap-2">
@@ -51,30 +35,48 @@ export function CompareView({ products }: { products: CatalogueProduct[] }) {
                 onClick={() => toggleCompare(product.id)}
                 aria-pressed={active}
                 disabled={full}
-                title={full ? `You can compare up to ${MAX_COMPARE} products` : undefined}
                 className={[
-                  "disabled:cursor-not-allowed disabled:opacity-40",
-                  "signage border px-3 py-2 transition-colors duration-200",
+                  "rounded-full border px-4 py-2 text-sm transition-colors duration-200 disabled:cursor-not-allowed disabled:opacity-40",
                   active
-                    ? "border-teal-deep bg-teal-deep/10 text-teal-deep"
-                    : "border-ink/20 text-ink/55 hover:border-ink/40 hover:text-ink",
+                    ? "border-cocoa bg-cocoa/10 font-medium text-cocoa"
+                    : "border-line text-taupe-deep hover:border-cocoa-soft hover:text-ink",
                 ].join(" ")}
               >
                 {product.name}
               </button>
             );
           })}
-          <button
-            type="button"
-            onClick={clearCompare}
-            className="signage border border-ink/20 px-3 py-2 text-ink/55 transition-colors duration-200 hover:border-gold-deep hover:text-gold-deep"
-          >
-            Clear
-          </button>
+          {selected.length > 0 && (
+            <button
+              type="button"
+              onClick={clearCompare}
+              className="rounded-full border border-line px-4 py-2 text-sm text-taupe transition-colors duration-200 hover:border-cocoa-soft hover:text-ink"
+            >
+              Clear
+            </button>
+          )}
         </div>
       </div>
 
-      <ComparisonTable products={selected} />
+      {selected.length > 0 ? (
+        <div className="mt-10">
+          <ComparisonColumns products={selected} />
+        </div>
+      ) : (
+        <div className="mt-10 animate-fade-in rounded-xl border border-dashed border-line px-6 py-20 text-center">
+          <p className="text-xl font-bold text-ink">Nothing selected yet</p>
+          <p className="mx-auto mt-3 max-w-sm text-[15px] leading-relaxed text-taupe-deep">
+            Pick up to {MAX_COMPARE} fragrances above, or add them from a product page, and they
+            will line up here side by side.
+          </p>
+          <Link
+            href="/line/million"
+            className="mt-8 inline-block rounded-full bg-bark px-7 py-3.5 text-sm font-medium text-paper transition-colors duration-200 hover:bg-ink"
+          >
+            Go to the collection
+          </Link>
+        </div>
+      )}
     </div>
   );
 }

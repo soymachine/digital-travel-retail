@@ -30,6 +30,8 @@ type PassportContextValue = {
   toggleFavourite: (productId: string) => void;
   stickersFor: (productId: string) => string[];
   toggleSticker: (productId: string, stickerId: string) => void;
+  /** Replace a product's stamps wholesale — what the "Save stamps" panel does. */
+  setStickers: (productId: string, stickerIds: string[]) => void;
   isComparing: (productId: string) => boolean;
   toggleCompare: (productId: string) => void;
   clearCompare: () => void;
@@ -86,6 +88,27 @@ export function PassportStateProvider({ children }: { children: ReactNode }) {
     });
   }, []);
 
+  const setStickers = useCallback((productId: string, stickerIds: string[]) => {
+    setState((current) => {
+      const applied = current.stickers[productId] ?? [];
+      applied
+        .filter((id) => !stickerIds.includes(id))
+        .forEach((stickerId) => track({ name: "sticker_removed", productId, stickerId }));
+      stickerIds
+        .filter((id) => !applied.includes(id))
+        .forEach((stickerId) => track({ name: "sticker_added", productId, stickerId }));
+
+      const stickers = { ...current.stickers };
+      if (stickerIds.length > 0) {
+        stickers[productId] = stickerIds;
+      } else {
+        delete stickers[productId];
+      }
+
+      return { ...current, stickers };
+    });
+  }, []);
+
   const toggleCompare = useCallback((productId: string) => {
     setState((current) => {
       const active = current.compare.includes(productId);
@@ -125,13 +148,14 @@ export function PassportStateProvider({ children }: { children: ReactNode }) {
       toggleFavourite,
       stickersFor: (productId) => state.stickers[productId] ?? [],
       toggleSticker,
+      setStickers,
       isComparing: (productId) => state.compare.includes(productId),
       toggleCompare,
       clearCompare,
       stickerCount,
       reset,
     };
-  }, [clearCompare, ready, reset, state, toggleCompare, toggleFavourite, toggleSticker]);
+  }, [clearCompare, ready, reset, setStickers, state, toggleCompare, toggleFavourite, toggleSticker]);
 
   return <PassportContext.Provider value={value}>{children}</PassportContext.Provider>;
 }
