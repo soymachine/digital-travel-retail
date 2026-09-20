@@ -53,6 +53,11 @@ Keyboard: `/` focuses search, `Escape` clears it.
 The interface follows the supplied mockups: warm paper, a tight grotesk, brand
 brown for titles and active navigation, and rubber stamps instead of web tags.
 
+The home page is the one screen that breaks the site's max width: the cover
+photograph runs the full width of the viewport, whole from the small breakpoint
+up and capped so it never runs past the fold, and cropped to a taller band on
+phones so the passport stays large.
+
 Navigation has three sections — **Brands**, **Comparisons**, **Sales** — as a
 top bar on desktop and a tab bar at the bottom on mobile, where the header
 becomes a passport cover (back, title, search).
@@ -64,7 +69,7 @@ is isolated to one file so swapping it changes nothing else:
 | --- | --- | --- |
 | Stamp artwork (NEW, TOP SELLER, …) | `components/stamps/StampArt.tsx` | the stamp images; `data/stickers.ts` picks shape and ink per stamp |
 | Note icons (rose, musk, coconut, …) | `components/notes/NoteIcon.tsx` | commissioned glyphs; notes map to a glyph by keyword, with a fallback |
-| Home cover photograph | `public/home/passport-hero.jpg` | the approved shot — this one is cropped from the mockup |
+| Home cover photograph | `public/home/passport-hero.jpg` | the approved shot |
 
 Fonts are system faces (Helvetica Neue / Arial), so there is no webfont
 round-trip. Swapping in the brand typeface is a change to `tailwind.config.ts`.

@@ -3,20 +3,27 @@ import Link from "next/link";
 
 import { assetPath } from "@/lib/assets";
 
+/**
+ * The home page is the only screen that breaks the site's max width: the cover
+ * photograph runs the full width of the viewport.
+ */
 export default function HomePage() {
   return (
-    <main id="main" className="mx-auto max-w-6xl px-4 pb-8 pt-4 sm:px-6 sm:pt-6">
-      <section className="relative overflow-hidden rounded-2xl">
+    <main id="main" className="pb-10">
+      <section className="relative w-full">
         <Image
           // Placeholder cover photograph — replace with the approved shot.
           src={assetPath("/home/passport-hero.jpg")}
           alt="A Perfume Sales Passport resting on a counter in an airport lounge, beside a boarding pass"
-          width={1392}
-          height={740}
+          width={1586}
+          height={992}
           priority
-          className="h-[60vh] min-h-[380px] w-full object-cover sm:h-[68vh]"
+          sizes="100vw"
+          // Narrow screens crop to a portrait-friendly band so the passport stays
+          // large; from the small breakpoint up the photograph is shown whole,
+          // capped so it never runs past the fold on very wide displays.
+          className="h-[58vh] min-h-[340px] w-full object-cover object-center sm:h-auto sm:max-h-[calc(100vh-4.5rem)]"
         />
-
       </section>
 
       {/* The button straddles the bottom edge of the photograph, so it never
