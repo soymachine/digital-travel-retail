@@ -31,6 +31,11 @@ const config: Config = {
         },
         // Ink of the red rubber stamps.
         stamp: "#A73D2C",
+        // The bars that frame the app: header and footer.
+        chrome: {
+          bg: "#FAF5EF",
+          ink: "#2F1A13",
+        },
         line: {
           DEFAULT: "#E3DAD0",
           soft: "#EFE8E0",

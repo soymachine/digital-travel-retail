@@ -15,7 +15,7 @@ export function SignOutButton() {
         }
         window.location.reload();
       }}
-      className="text-[11px] text-taupe transition-colors duration-200 hover:text-cocoa"
+      className="text-[11px] text-white/70 transition-colors duration-200 hover:text-white"
     >
       Sign out
     </button>
