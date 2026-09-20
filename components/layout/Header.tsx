@@ -12,21 +12,16 @@ import { assetPath } from "@/lib/assets";
  * active one underlined. Mobile: a passport-cover bar — back, title, search —
  * with the sections living in the bottom tab bar instead.
  */
-/**
- * The mark that sits before the wordmark.
- *
- * PLACEHOLDER: drop the brand artwork at /public/brand/logo.svg and this picks
- * it up — nothing else references the file.
- */
+/** The house mark, ahead of the product name. */
 function Wordmark({ className = "" }: { className?: string }) {
   return (
     <Image
-      src={assetPath("/brand/logo.svg")}
-      alt=""
-      width={32}
-      height={32}
+      src={assetPath("/logo/Logo_PUIG_NO-OFICIAL.svg")}
+      alt="Puig"
+      width={689}
+      height={295}
       priority
-      className={className}
+      className={["w-auto", className].join(" ")}
     />
   );
 }
@@ -57,9 +52,10 @@ export function Header() {
 
         <Link
           href="/"
-          className="flex items-center gap-2 text-sm font-medium uppercase tracking-signage text-chrome-ink"
+          className="flex items-center gap-3 text-sm font-medium uppercase tracking-signage text-chrome-ink"
         >
-          <Wordmark className="h-6 w-6" />
+          <Wordmark className="h-6" />
+          <span aria-hidden className="h-5 w-px bg-chrome-ink/20" />
           {isHome ? "Travel Retail" : "Passport"}
         </Link>
 
@@ -81,9 +77,10 @@ export function Header() {
       <div className="mx-auto hidden h-14 max-w-6xl items-center justify-between px-6 md:flex">
         <Link
           href="/"
-          className="flex items-center gap-3 text-base font-medium uppercase tracking-signage text-chrome-ink"
+          className="flex items-center gap-4 text-base font-medium uppercase tracking-signage text-chrome-ink"
         >
-          <Wordmark className="h-7 w-7" />
+          <Wordmark className="h-8" />
+          <span aria-hidden className="h-6 w-px bg-chrome-ink/20" />
           Travel Retail
         </Link>
 
