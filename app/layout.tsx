@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 
+import { AccessGate } from "@/components/auth/AccessGate";
 import { BottomNav } from "@/components/layout/BottomNav";
 import { Header } from "@/components/layout/Header";
 import { SiteChrome } from "@/components/layout/SiteChrome";
@@ -21,15 +22,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body className="min-h-screen bg-paper text-ink antialiased">
         <PassportStateProvider>
-          <a
-            href="#main"
-            className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-full focus:bg-bark focus:px-5 focus:py-3 focus:text-sm focus:text-paper"
-          >
-            Skip to content
-          </a>
-          <Header />
-          <SiteChrome>{children}</SiteChrome>
-          <BottomNav />
+          <AccessGate>
+            <a
+              href="#main"
+              className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-full focus:bg-bark focus:px-5 focus:py-3 focus:text-sm focus:text-paper"
+            >
+              Skip to content
+            </a>
+            <Header />
+            <SiteChrome>{children}</SiteChrome>
+            <BottomNav />
+          </AccessGate>
         </PassportStateProvider>
       </body>
     </html>

@@ -1,3 +1,5 @@
+import { SignOutButton } from "@/components/auth/SignOutButton";
+
 /** The machine-readable strip along the bottom edge of a passport page. */
 export function Footer() {
   return (
@@ -10,9 +12,12 @@ export function Footer() {
           P&lt;TRAVEL&lt;RETAIL&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;
         </p>
         <p className="sr-only">Travel Retail Perfume Sales Passport — demonstration build.</p>
-        <p className="mt-3 text-[11px] text-taupe">
-          Demonstration build · product copy pending brand approval
-        </p>
+        <div className="mt-3 flex flex-wrap items-center justify-between gap-3">
+          <p className="text-[11px] text-taupe">
+            Demonstration build · product copy pending brand approval
+          </p>
+          <SignOutButton />
+        </div>
       </div>
     </footer>
   );

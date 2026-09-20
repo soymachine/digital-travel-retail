@@ -30,22 +30,43 @@ npm run typecheck            # tsc --noEmit
 Requires Node 20+. TypeScript is pinned to 5.x — Next 15 does not detect TS 7,
 and silently ignores the `@/*` path aliases if it is installed.
 
+## The sign-in screen
+
+The demo opens on a sign-in screen. The credentials are `puig` / `puig2026`,
+hardcoded in `components/auth/credentials.ts`. The user name is matched without
+regard to case or surrounding spaces; the password is matched exactly. Being
+signed in is remembered in session storage, so a reload keeps the passport open
+and a new tab asks again. "Sign out" in the footer returns to the screen, which
+is useful when restarting a demo.
+
+**This is a façade, not a security control.** The site is a static export with
+no server, so the credentials ship inside the JavaScript bundle: anyone who
+opens developer tools can read them, and clearing one session-storage key walks
+straight past the screen. It is there to set the scene. Real access control
+needs a backend that holds the credentials and serves the content only after
+authenticating — which is Phase 2 territory, along with the CMS.
+
+One side effect worth knowing: because the gate renders before anything else,
+the exported HTML of every page now contains the sign-in screen rather than the
+catalogue, and the pages render once JavaScript runs.
+
 ## Demo journey
 
-1. **Home** — the passport on the counter → *Open passport*.
-2. **`/brand/rabanne`** — the brand and its collections.
-3. **`/line/million`** — the collection: search, filters, sort, three cards.
-4. Search `ylang` → Million Gold Parfum + Million Red. Search works on names,
+1. **Sign in** — `puig` / `puig2026`.
+2. **Home** — the passport on the counter → *Open passport*.
+3. **`/brand/rabanne`** — the brand and its collections.
+4. **`/line/million`** — the collection: search, filters, sort, three cards.
+5. Search `ylang` → Million Gold Parfum + Million Red. Search works on names,
    families, notes, descriptors, perfumers and selling copy.
-5. **`/product/million-red`** — bottle, stamps, family, notes, descriptor,
+6. **`/product/million-red`** — bottle, stamps, family, notes, descriptor,
    perfumers, then the story, selling arguments and when to recommend it.
-6. *+ → New → Save stamps*. Back on the collection the stamp is on the card,
+7. *+ → New → Save stamps*. Back on the collection the stamp is on the card,
    and it is also a filter.
-7. **`/compare`** — pick up to three, from one house or several, and read them
+8. **`/compare`** — pick up to three, from one house or several, and read them
    side by side. The fresh → intense axis appears when they share a collection,
    since each house sets that scale for its own line.
-8. **`/my-picks`** — stamps and favourites, still there after a refresh.
-9. **`/sales`** — a placeholder for the next phase, and it says so.
+9. **`/my-picks`** — stamps and favourites, still there after a refresh.
+10. **`/sales`** — a placeholder for the next phase, and it says so.
 
 Keyboard: `/` focuses search, `Escape` clears it.
 
